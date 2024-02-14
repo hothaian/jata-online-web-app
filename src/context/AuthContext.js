@@ -11,26 +11,7 @@ const AuthContext = React.createContext();
 export const useAuth = () => useContext(AuthContext);
 
 // AuthProvider component to manage authentication state
-export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
 
-  // Function to handle login
-  const login = (userData) => {
-    // setIsLoggedIn(true);
-    // setUser(userData);
-    //WorkFlow: get userData from database via user input username 
-    //and then compare user-input password vs data password.
-    //testing
-    if(userData.username === 'angelvu' && userData.password === '123456'){
-        setIsLoggedIn(true);
-        setUser(userData);
-        console.log("Logined");
-        return true;
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
