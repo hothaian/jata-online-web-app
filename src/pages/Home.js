@@ -42,6 +42,7 @@ export const Home = () => {
       {filteredSellPosts.map((sellPost, index) => (
         <SellPost
           key={index}
+          sellpostID={sellPost.sellPostID}
           title={sellPost.title}
           userID={sellPost.userID}
           userProfileURL={sellPost.userProfileURL}
