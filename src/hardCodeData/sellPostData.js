@@ -1,5 +1,6 @@
 export const sellPosts = [
-  {
+  { 
+    sellPostID: "1",
     userID: "user123",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Vintage Leather Jacket",
@@ -10,9 +11,14 @@ export const sellPosts = [
     quantity: 1,
     picUrl: "https://www.kcleatherco.com/cdn/shop/files/ford_3_2048x.jpg?v=1689931980",
     category: "Clothing",
-    datePost: "2023-12-15"
+    datePost: "2023-12-15",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
   {
+    sellPostID: "2",
     userID: "user456",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Bomber Jacket",
@@ -23,9 +29,14 @@ export const sellPosts = [
     quantity: 3,
     picUrl: "https://cdn11.bigcommerce.com/s-98f3d/images/stencil/1280x1280/products/2284/28306/Cockpit_USA_R.A.F._Fighter_Weight_Sheepskin_Bomber_Jacket_Brown_USA_Made_closeup__57589.1677262836.jpg?c=2",
     category: "Clothing",
-    datePost: "2023-12-14"
+    datePost: "2023-12-14",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
   {
+    sellPostID: "3",
     userID: "user789",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Nike Air Jordan 1 Retro High OG",
@@ -36,9 +47,14 @@ export const sellPosts = [
     quantity: 2,
     picUrl: "https://cdn.sanity.io/images/d6wcctii/production/00dd287e3096175b29ccc439e3c99803453ab7ab-1070x760.jpg?w=1200&q=80&fit=clip&auto=format",
     category: "Shoes",
-    datePost: "2023-12-13"
+    datePost: "2023-12-13",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   }, 
-  {
+  { 
+    sellPostID: "4",
     userID: "user789",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Satin Dress",
@@ -49,9 +65,14 @@ export const sellPosts = [
     quantity: 2,
     picUrl: "https://finesse.us/cdn/shop/products/3D-Dress-Front.jpg?v=1674914516&width=1426",
     category: "Clothing",
-    datePost: "2023-12-13"
+    datePost: "2023-12-13",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "5",
     userID: "user101112",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Vintage 98/99 David Beckham",
@@ -62,9 +83,14 @@ export const sellPosts = [
     quantity: 1,
     picUrl: "https://i.ebayimg.com/images/g/y44AAOSw3N5lO5BD/s-l1600.jpg",
     category: "Clothing",
-    datePost: "2023-12-12"
+    datePost: "2023-12-12",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
   {
+    sellPostID: "6",
     userID: "user131415",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Leather Handbag",
@@ -75,9 +101,14 @@ export const sellPosts = [
     quantity: 4,
     picUrl: "https://cdn11.bigcommerce.com/s-uiywfsyvbe/images/stencil/1280x1280/products/2458/12409/leather-purse-dark-brown-bag-tumbled-saddleback__59270.1686249399.jpg?c=1",
     category: "Accessories",
-    datePost: "2023-12-11"
+    datePost: "2023-12-11",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "7",
     userID: "user2345",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Straight-Fit Jeans",
@@ -88,9 +119,14 @@ export const sellPosts = [
     quantity: 2,
     picUrl: "https://static.e-stradivarius.net/5/photos4/2024/V/0/1/p/7343/202/702/7343202702_2_4_1.jpg?t=1689848347398&impolicy=stradivarius-itxmediumhigh&imwidth=480&imformat=chrome&imdensity=2.625",
     category: "Clothing",
-    datePost: "2024-1-13"
+    datePost: "2024-1-13",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
   {
+    sellPostID: "8",
     userID: "user9857",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Women's Sweatshirt.",
@@ -101,9 +137,14 @@ export const sellPosts = [
     quantity: 4,
     picUrl: "https://m.media-amazon.com/images/I/61e4wK4SBiL._AC_UY1000_.jpg",
     category: "Clothing",
-    datePost: "2024-1-4"
+    datePost: "2024-1-4",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "9",
     userID: "user9637",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Men's Sweatshirt",
@@ -114,9 +155,14 @@ export const sellPosts = [
     quantity: 5,
     picUrl: "https://m.media-amazon.com/images/I/61CATBYYloL._AC_SL1500_.jpg",
     category: "Clothing",
-    datePost: "2024-2-5"
+    datePost: "2024-2-5",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "10",
     userID: "user99587",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Sunglasses",
@@ -127,9 +173,14 @@ export const sellPosts = [
     quantity: 5,
     picUrl: "https://target.scene7.com/is/image/Target/GUEST_73be79b1-bf94-4ddd-a3af-9cabef4ab071?wid=1200&hei=1200&qlt=80&fmt=webp",
     category: "Accessories",
-    datePost: "2023-12-17"
+    datePost: "2023-12-17",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "11",
     userID: "user99587",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Gold Hoops",
@@ -140,9 +191,14 @@ export const sellPosts = [
     quantity: 4,
     picUrl: "https://image.brilliantearth.com/media/product_images/JB/BE3165-Y_top.jpg",
     category: "Accessories",
-    datePost: "2023-12-21"
+    datePost: "2023-12-21",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "12",
     userID: "user99587",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Watch",
@@ -153,9 +209,14 @@ export const sellPosts = [
     quantity: 3,
     picUrl: "https://larssonjennings.com/cdn/shop/products/Boyfriend_Mini_Elevate_Gold_Green_1296x.jpg?v=1697367250",
     category: "Accessories",
-    datePost: "2024-1-15"
+    datePost: "2024-1-15",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "12",
     userID: "user99587",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Watch",
@@ -166,9 +227,14 @@ export const sellPosts = [
     quantity: 2,
     picUrl: "https://www.movado.com/dw/image/v2/BDKZ_PRD/on/demandware.static/-/Sites-mgi-master/default/dw810e31db/images/products/3650124w_LRG_rgb_Web.png?sw=720&sh=800",
     category: "Accessories",
-    datePost: "2024-1-25"
+    datePost: "2024-1-25",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "13",
     userID: "user89687",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Heels",
@@ -179,9 +245,14 @@ export const sellPosts = [
     quantity: 4,
     picUrl: "https://michaelkors.scene7.com/is/image/MichaelKors/40F2HNMP2L-1716_1?$large$",
     category: "Shoes",
-    datePost: "2024-2-1"
+    datePost: "2024-2-1",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   },
-  {
+  { 
+    sellPostID: "14",
     userID: "user99587",
     userProfileURL: "https://www.marismith.com/wp-content/uploads/2014/07/facebook-profile-blank-face.jpeg",
     title: "Boots",
@@ -192,6 +263,10 @@ export const sellPosts = [
     quantity: 5,
     picUrl: "https://www.ariat.com/dw/image/v2/AAML_PRD/on/demandware.static/-/Sites-ARIAT/default/dw8667a4cf/images/warm/10031452_3-4_front_warm.jpg?sw=800&sh=800",
     category: "Shoes",
-    datePost: "2024-1-11"
+    datePost: "2024-1-11",
+    comments: [
+      { commentID: "1", userID: "user456", comment: "Looks amazing! I'd love to get one." },
+      { commentID: "2", userID: "user789", comment: "Is it available in black?" }
+    ]
   }
 ];
