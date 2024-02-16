@@ -89,6 +89,10 @@ const UserButton = () => {
               </Link>
             </li>            
             <UserButton />              
+          
+              <li className="navbar-nav ms-auto">
+                <Link className="nav-link" to="/cart">Cart</Link>
+              </li>
             
           </ul>
         </div>

@@ -7,9 +7,11 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const AuthContext = React.createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+ 
+export const useAuth = () => useContext(AuthContext);
+
+// AuthProvider component to manage authentication state
+
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);

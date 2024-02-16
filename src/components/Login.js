@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {useAuth} from '../context/AuthContext';
 
@@ -37,6 +38,10 @@ export const LoginModal = () => {
             </form>
           </div>
           <div className="modal-footer">
+          <div>
+          {/* <p style={{ margin: 0 }}>Don't have an account? <u onClick={handleSignUp}>Sign Up</u></p> */}
+                <p style={{ margin: 0}}>Don't have an account? <u>Sign Up</u></p>
+            </div>
             {/* <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button> */}
             <button type="button" className="btn btn-primary" onClick={handleLogin}>Login</button>
           </div>

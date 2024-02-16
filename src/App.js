@@ -13,6 +13,7 @@ import 'bootswatch/dist/lux/bootstrap.min.css';
 
 //COMPONENT
 import NavBar from './components/NavBar';
+import {ShoppingCart} from './components/ShoppingCart';
 import Login from './components/LoginWindow';
 import SignUp from './components/SignUp';
 
@@ -20,6 +21,7 @@ import SignUp from './components/SignUp';
 import { About } from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
+import { SingleSellPost } from './components/singleSellPost';
 
 const App = () => {  
   return (
@@ -32,6 +34,9 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/cart" element={<ShoppingCart />} />
+          <Route path="/sellpost/:sellPostID" element={<SingleSellPost />} />
+
         </Routes>
       </div>
     </Router>

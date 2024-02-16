@@ -1,3 +1,4 @@
+
 /**
  * Author: An Ho
  */
@@ -142,3 +143,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+

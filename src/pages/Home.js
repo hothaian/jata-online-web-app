@@ -38,10 +38,11 @@ export const Home = () => {
           ))}
         </ul>
       </nav>
-      <h1>this is HOME</h1>
+      <h1>Explore</h1>
       {filteredSellPosts.map((sellPost, index) => (
         <SellPost
           key={index}
+          sellpostID={sellPost.sellPostID}
           title={sellPost.title}
           userID={sellPost.userID}
           userProfileURL={sellPost.userProfileURL}
