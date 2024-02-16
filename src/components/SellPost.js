@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-export const SellPost = ({ userID, userProfileURL, datePost, title, description, price, size, gender, quantity, picUrl, category, addToCart }) => {
+export const SellPost = ({ sellpostID, userID, userProfileURL, datePost, title, description, price, size, gender, quantity, picUrl, category, addToCart }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1); // State to manage selected quantity
 
   const handleBuyButton = () => {
@@ -24,9 +25,11 @@ export const SellPost = ({ userID, userProfileURL, datePost, title, description,
     <div className="card mb-3">
       <div className="row g-0">
         <div className="col-md-6">
-          <div className="card-img-container" style={{ height: '100%' }}>
-            <img src={picUrl} className="card-img-top img-fluid" alt="Product" style={{ height: '100%', objectFit: 'cover' }} />
-          </div>
+          <Link to={`/sellpost/${sellpostID}`}>
+            <div className="card-img-container" style={{ height: '100%' }}>
+              <img src={picUrl} className="card-img-top img-fluid" alt="Product" style={{ height: '100%', objectFit: 'cover' }} />
+            </div>
+          </Link>
         </div>
         <div className="col-md-6">
           <div className="card-header d-flex justify-content-between align-items-center">
