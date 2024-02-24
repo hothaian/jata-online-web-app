@@ -35,12 +35,12 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to JATA application." });
 });
 
-require("./routes/user.routes")(app);
-require("./routes/sellpost.routes")(app);
-require("./routes/custom.routes")(app);
-require("./routes/address.routes")(app);
-require("./routes/category.routes")(app);
-require("./routes/order.routes")(app);
+require("./routes/user.routes.js")(app);
+require("./routes/sellpost.routes.js")(app);
+require("./routes/custom.routes.js")(app);
+require("./routes/address.routes.js")(app);
+require("./routes/category.routes.js")(app);
+require("./routes/order.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
