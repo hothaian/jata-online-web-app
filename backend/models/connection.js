@@ -1,4 +1,7 @@
 const dbConfig = require("../config/db.config.js");
+
+
+
 const UserModel = require("./user.model.js");
 const SellPostModel = require("./sellpost.model.js");
 const Sequelize = require("sequelize");
