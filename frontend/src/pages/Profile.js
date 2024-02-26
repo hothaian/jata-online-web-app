@@ -7,6 +7,7 @@ import {useNavigate } from 'react-router-dom';
 import ImageUploader from '../components/ImageHandle/ImageUploader';
 import ImageList from '../components/ImageHandle/ImageList';
 
+
 const Profile = () => {
   const { currentUser,userLoggedIn,loading } = useAuth();
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ const Profile = () => {
           <p>
             <strong>Email:</strong> {currentUser.email}
           </p>
+
+          
           <ImageUploader/>
           <ImageList/>
         </>

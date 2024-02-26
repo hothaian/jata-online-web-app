@@ -21,7 +21,7 @@ import SignUp from './components/SignUp';
 import { About } from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
-import DashBoard from './pages/DashBoard';
+// import DashBoard from './pages/DashBoard';
 
 const App = () => {  
   return (
@@ -35,7 +35,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<ShoppingCart />} />
-          <Route path="/dashboard" element={<DashBoard />} />
+          {/* <Route path="/dashboard" element={<DashBoard />} /> */}
 
         </Routes>
       </div>
