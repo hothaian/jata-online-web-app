@@ -1,0 +1,26 @@
+-- Retrieve ALL Orders and It's Category.
+
+SELECT
+  o.order_id AS order_id,
+  c.category_name
+FROM
+  jatadata.order o
+JOIN
+  jatadata.sellpostcategory sc ON o.sellpost_id = sc.sellpost_id
+JOIN
+  jatadata.category c ON sc.category_id = c.category_id;
+
+
+-- Count of Orders per Category
+
+SELECT
+  c.category_name,
+  COUNT(o.order_id) AS order_count
+FROM
+  jatadata.category c
+JOIN
+  jatadata.sellpostcategory sc ON c.category_id = sc.category_id
+JOIN
+  jatadata.order o ON sc.sellpost_id = o.sellpost_id
+GROUP BY
+  c.category_name;

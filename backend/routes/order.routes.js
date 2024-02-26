@@ -24,6 +24,8 @@ module.exports = app => {
   
     // Retrieve all Orders
     router.get("/", orders.findAll);
+    router.get("/order-by-category", orders.findTotalOrderByCategory);
+
   
     // Retrieve a single Order by id
     router.get("/:orderId", orders.findOne);
@@ -36,7 +38,14 @@ module.exports = app => {
   
     // Delete all Orders
     router.delete("/", orders.deleteAll);
+
+ 
+
   
     app.use('/api/orders', router);
+
+
+
+
   };
   

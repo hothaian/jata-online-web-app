@@ -2,6 +2,10 @@ const db = require("../models/connection");
 const Order = db.Order;
 const Address = db.Address;
 const User = db.User;
+const Category = db.Category;
+const SellPost = db.SellPost
+const sequelize = db.sequelize;
+
 
 // Create a new order
 exports.create = async (req, res) => {
@@ -147,4 +151,31 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all orders."
       });
     });
+};
+
+
+
+//An Ho - SQL Querry
+exports.findTotalOrderByCategory = (req, res) => {
+  sequelize.query(
+    `SELECT c.category_name, COUNT(o.order_id) AS order_count
+    FROM jatadata.category c
+    JOIN jatadata.sellpostcategory sc ON c.category_id = sc.category_id
+    JOIN jatadata.order o ON sc.sellpost_id = o.sellpost_id
+    GROUP BY c.category_name;`,
+    { type: sequelize.QueryTypes.SELECT }
+  )
+  .then(data => {
+    res.status(200).json({      
+      message: 'Orders grouped by category retrieved successfully',
+      data: data
+    });
+  })
+  .catch(err => {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error retrieving orders grouped by category',
+      error: err.message
+    });
+  });
 };
