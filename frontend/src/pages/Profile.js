@@ -6,6 +6,8 @@ import { useAuth } from '../context/AuthContext';
 import {useNavigate } from 'react-router-dom';
 import ImageUploader from '../components/ImageHandle/ImageUploader';
 import ImageList from '../components/ImageHandle/ImageList';
+import PieChart from '../components/Charts/PieChart';
+import DashBoard from './DashBoard';
 
 
 const Profile = () => {
@@ -34,9 +36,9 @@ const Profile = () => {
             <strong>Email:</strong> {currentUser.email}
           </p>
 
-          
           <ImageUploader/>
           <ImageList/>
+          <DashBoard/>
         </>
       ) : null}
 

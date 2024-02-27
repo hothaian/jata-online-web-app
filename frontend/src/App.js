@@ -21,6 +21,7 @@ import SignUp from './components/SignUp';
 import { About } from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
+import PieChart from './components/Charts/PieChart';
 // import DashBoard from './pages/DashBoard';
 
 const App = () => {  
@@ -35,7 +36,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<ShoppingCart />} />
-          {/* <Route path="/dashboard" element={<DashBoard />} /> */}
+          <Route path="/piechart" element={<PieChart />} />
 
         </Routes>
       </div>

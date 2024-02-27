@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ResponsivePie } from "@nivo/pie";
+import { Box } from "@mui/material";
 
 const PieChart = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [transformedData, setTransformedData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,18 +11,17 @@ const PieChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/orders/order-by-category");
+        const response = await fetch(
+          "http://localhost:8080/api/orders/order-by-category"
+        );
         const result = await response.json();
-       
+        console.log("🚀 ~ fetchData ~ result.data:", result.data);
         setData(result.data);
-        console.log("🚀 ~ fetchData ~ result.data:", result.data)
       } catch (err) {
-       
         setError(err.message);
       } finally {
         setLoading(false);
       }
-        
     };
 
     fetchData();
@@ -29,38 +29,91 @@ const PieChart = () => {
 
   useEffect(() => {
     if (data) {
-      // Transform the data
+      // Transform the data to percentage
+      const totalOrders = data.reduce((total, item) => total + item.order_count, 0);
       const transformed = data.map((item) => ({
         id: item.category_name.toLowerCase(),
         label: item.category_name,
-        value: item.order_count,
+        value: Math.round((item.order_count / totalOrders) * 100),
         color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`, // Generate random color
+        
       }));
-      setTransformedData(transformed);
+    
+      console.log("🚀 ~ transformed ~ transformed:", transformed);
+
+      setTransformedData( transformed);
     }
   }, [data]); // Re-run whenever 'data' changes
 
+  const fill = [
+    {
+      match: {
+        id: "accessories",
+      },
+      id: "dots",
+    },
+    {
+      match: {
+        id: "clothing",
+      },
+      id: "lines",
+    },
+    {
+      match: {
+        id: "shoes",
+      },
+      id: "dots",
+    }
+    ];
+
   return (
     <div>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      {transformedData && (
-        <div>
+      <Box m="20px"  >
+        <h4>Order By Category</h4>
+        <Box height="40vh">
           <ResponsivePie
-            data={transformedData}
+            data={transformedData} 
+            arcLabel={(item) => `${item.value}%`}          
             margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-            startAngle={-180}
-            sortByValue={true}
-            innerRadius={0.45}
+            innerRadius={0.5}
+            padAngle={0.7}
+            cornerRadius={3}
             activeOuterRadiusOffset={8}
-            colors={{ scheme: "category10" }}
-            borderColor={{ theme: "background" }}
-            arcLinkLabelsSkipAngle={7}
+            borderWidth={1}
+            borderColor={{
+              from: "color",
+              modifiers: [["darker", 0.2]],
+            }}
+            arcLinkLabelsSkipAngle={10}
             arcLinkLabelsTextColor="#333333"
             arcLinkLabelsThickness={2}
             arcLinkLabelsColor={{ from: "color" }}
             arcLabelsSkipAngle={10}
-            arcLabelsTextColor={{ theme: "background" }}
+            arcLabelsTextColor={{
+              from: "color",
+              modifiers: [["darker", 2]],
+            }}
+            defs={[
+              {
+                id: "dots",
+                type: "patternDots",
+                background: "inherit",
+                color: "rgba(255, 255, 255, 0.3)",
+                size: 4,
+                padding: 1,
+                stagger: true,
+              },
+              {
+                id: "lines",
+                type: "patternLines",
+                background: "inherit",
+                color: "rgba(255, 255, 255, 0.3)",
+                rotation: -45,
+                lineWidth: 6,
+                spacing: 10,
+              },
+            ]}
+            fill={fill}
             legends={[
               {
                 anchor: "bottom",
@@ -87,8 +140,8 @@ const PieChart = () => {
               },
             ]}
           />
-        </div>
-      )}
+        </Box>
+      </Box>
     </div>
   );
 };

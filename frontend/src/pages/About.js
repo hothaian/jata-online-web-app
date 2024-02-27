@@ -1,6 +1,5 @@
 import React from "react";
 import logoImage from "../images/jata_black.png";
-import PieChart from "../components/Charts/PieChart";
 
 export const About = () => {
   return (
@@ -8,7 +7,7 @@ export const About = () => {
       <div>
         <h1 className="display-4">Welcome to JATA Fashion</h1>
       </div>
-      <PieChart/>
+
       <div>
         <img style={{ width: "400px", height: "400px" }} src={logoImage} />
         <h2>About Us </h2>
