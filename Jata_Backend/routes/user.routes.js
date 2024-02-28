@@ -31,6 +31,9 @@ module.exports = app => {
   
     // Retrieve a single user with id
     router.get("/:userId", user.findOne);
+
+     // Retrieve a single user with email
+     router.get("/email/:userEmail", user.findOneByEmail);
   
     // Update a user with id
     router.put("/:userId", user.update);

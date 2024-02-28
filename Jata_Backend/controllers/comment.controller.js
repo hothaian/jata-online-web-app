@@ -6,7 +6,7 @@ const User = db.User;
 // Create and Save a new Comment
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.user_id || !req.body.description || !req.body.post_id) {
+  if (!req.body.user_id || !req.body.description || !req.body.sellpost_id) {
     res.status(400).send({ message: "User ID, description, and post ID can not be empty!" });
     return;
   }
@@ -15,7 +15,7 @@ exports.create = (req, res) => {
   const comment = {
     user_id: req.body.user_id,
     description: req.body.description,
-    post_id: req.body.post_id
+    sellpost_id: req.body.sellpost_id
   };
 
   // Save Comment in the database

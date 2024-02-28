@@ -61,7 +61,20 @@ exports.findAll = (req, res) => {
   const limit = parseInt(req.query.limit) || 5; // Default to 5 sellposts per page
   const offset = (page - 1) * limit;
   
-  SellPost.findAll()
+  SellPost.findAll({
+    include: [{
+      model: User,
+      as: 'seller'
+    },
+    {
+      model: Category,
+      as: 'categories' // Specify the alias used in the association
+    }
+  ],
+    order: [
+      ['sellpost_id', 'DESC'] // Order by createdAt field in descending order
+    ]
+  })
   .then(data => {
     res.send(data);
   })

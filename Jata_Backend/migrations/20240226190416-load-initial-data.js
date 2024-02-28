@@ -7,7 +7,7 @@ module.exports = {
     try {
 
       const usersData = [
-        { username: 'john_doe', email: 'john@example.com', role_id: 1, first_name: 'John', last_name: 'Doe', gender: 'Male', date_of_birth: '1990-05-15', profile_pictureUrl: 'https://img.freepik.com/free-photo/portrait-friendly-looking-happy-attractive-male-model-with-moustache-beard-wearing-trendy-transparent-glasses-smiling-broadly-while-listening-interesting-story-waiting-mom-give-meal_176420-22400.jpg', createdAt: currentDate, updatedAt: currentDate },
+        { username: 'Phu Tin', email: 'huutinphu@gmail.com', role_id: 1, first_name: 'John', last_name: 'Doe', gender: 'Male', date_of_birth: '1990-05-15', profile_pictureUrl: 'https://img.freepik.com/free-photo/portrait-friendly-looking-happy-attractive-male-model-with-moustache-beard-wearing-trendy-transparent-glasses-smiling-broadly-while-listening-interesting-story-waiting-mom-give-meal_176420-22400.jpg', createdAt: currentDate, updatedAt: currentDate },
         { username: 'jane_smith', email: 'jane@example.com', role_id: 2, first_name: 'Jane', last_name: 'Smith', gender: 'Female', date_of_birth: '1988-09-21', profile_pictureUrl: 'https://images.assetsdelivery.com/compings_v2/fizkes/fizkes2011/fizkes201102042.jpg', createdAt: currentDate, updatedAt: currentDate },
         { username: 'mike_jones', email: 'mike@example.com', role_id: 1, first_name: 'Mike', last_name: 'Jones', gender: 'Male', date_of_birth: '1995-12-03', profile_pictureUrl: 'https://media.istockphoto.com/id/1497142422/photo/close-up-photo-portrait-of-young-successful-entrepreneur-businessman-investor-wearing-glasses.jpg?b=1&s=612x612&w=0&k=20&c=dJPY0jBIe4JGgzN9ijZMrBRnvpx02_YZfc3T7hB-K9Q=', createdAt: currentDate, updatedAt: currentDate },
         { username: 'sara_adams', email: 'sara@example.com', role_id: 2, first_name: 'Sara', last_name: 'Adams', gender: 'Female', date_of_birth: '1985-03-28', profile_pictureUrl: 'https://media.istockphoto.com/id/1471845315/photo/happy-portrait-or-business-woman-taking-a-selfie-in-office-building-for-a-social-media.jpg?b=1&s=612x612&w=0&k=20&c=A5kpiV_WrshURTPtn3pGoMMZq8SiknQZ8ZIJyXcBCsM=', createdAt: currentDate, updatedAt: currentDate },
@@ -180,6 +180,12 @@ module.exports = {
         { seller_id: 10, buyer_id: 1, sellpost_id: 10, quantity: 1, total_price: 299.99, order_shipping_state: 'Pending', shipping_address_id: 10, createdAt: currentDate, updatedAt: currentDate }
       ];
 
+      const commentData = [
+        { user_id: 1, description: "Love it", sellpost_id: 3,  createdAt: currentDate, updatedAt: currentDate},
+        { user_id: 2, description: "Love it", sellpost_id: 1,  createdAt: currentDate, updatedAt: currentDate},
+        { user_id: 3, description: "Love it So Much", sellpost_id: 4,  createdAt: currentDate, updatedAt: currentDate},
+        { user_id: 4, description: "Like it", sellpost_id: 2,  createdAt: currentDate, updatedAt: currentDate},
+      ];
 
       // Insert data into 'user' table
       await queryInterface.bulkInsert('user', usersData, { returning: true });
@@ -191,6 +197,8 @@ module.exports = {
 
       // Insert data into 'sellpost' table
       await queryInterface.bulkInsert('sellpost', sellpostsData);
+
+      await queryInterface.bulkInsert('comment', commentData);
 
       // Insert data into 'category' table
       await queryInterface.bulkInsert('category', categoriesData);
