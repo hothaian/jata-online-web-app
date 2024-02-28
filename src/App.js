@@ -22,6 +22,7 @@ import { About } from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
 import { SingleSellPost } from './components/singleSellPost';
+import { CategorySellPost } from './components/CategorySellPost';
 
 const App = () => {  
   return (
@@ -35,7 +36,8 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<ShoppingCart />} />
-          <Route path="/sellpost/:sellPostID" element={<SingleSellPost />} />
+          <Route path="/sellpost/:post_id" element={<SingleSellPost />} />
+          <Route path="/category/:category_id" element={<CategorySellPost />} />
 
         </Routes>
       </div>
