@@ -4,58 +4,70 @@ import React, { useEffect, useState } from 'react';
 import logoImage from '../images/jata_black.png'; // Adjust the path to your logo image
 import { sellPosts } from '../hardCodeData/sellPostData';
 import { SellPost } from '../components/SellPost';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
   const [sellPostList, setSellPostList] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All'); // Default active category
-
+  const [categoryList, setCategoryList] =  useState(null);
 
   
 
   //Effect for Sell Post
   useEffect(()=>{
-    setSellPostList(sellPosts);
-  },[])
-  const filteredSellPosts = activeCategory === 'All' ? sellPostList : sellPostList.filter(post => post.category === activeCategory);
+    const fetchSellPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/sellposts');
+        if (!response.ok) {
+          throw new Error('Error fetching sellposts');
+        }
+        const data = await response.json();
+        console.log(data);
+        setSellPostList(data);
+      } catch (error) {
+        console.error('Error fetching sellposts:', error);
+      }
+    };
+    const fetchCategoryList = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/category');
+        if (!response.ok) {
+          throw new Error('Error fetching sellposts');
+        }
+        const data = await response.json();
+        console.log(data);
+        setCategoryList(data);
+      } catch (error) {
+        console.error('Error fetching sellposts:', error);
+      }
+    };
 
-  const categories = ['All', ...new Set(sellPosts.map(post => post.category))];
+    fetchSellPosts();
+    fetchCategoryList();
+    },[])
+  // const filteredSellPosts = activeCategory === 'All' ? sellPostList : sellPostList.filter(post => post.category === activeCategory);
+
+  // const categories = ['All', ...new Set(sellPosts.map(post => post.category))];
   
 
   return (
 
     <>
-      <nav>
-        <ul className="nav nav-tabs">
-          {categories.map((category, index) => (
-            <li key={index} className="nav-item">
-              <button
-                className={`nav-link ${activeCategory === category ? 'active' : ''}`}
-                onClick={() => setActiveCategory(category)}
-              >
-                {category}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
       <h1>Explore</h1>
-      {filteredSellPosts.map((sellPost, index) => (
+      { categoryList ?
+          categoryList.map(category => (
+                      <Link to={`/category/${category.category_id}`}>
+                          <span key={category.category_id} className="badge bg-primary m-1">{category.category_name}</span>
+                      </Link>
+            ))
+          
+      :<></>}
+      {sellPostList ? sellPostList.map((sellPost) => (
         <SellPost
-          key={index}
-          sellpostID={sellPost.sellPostID}
-          title={sellPost.title}
-          userID={sellPost.userID}
-          userProfileURL={sellPost.userProfileURL}
-          description={sellPost.description}
-          price={sellPost.price}
-          size={sellPost.size}
-          gender={sellPost.gender}
-          quantity={sellPost.quantity}
-          picUrl={sellPost.picUrl}
-          category={sellPost.category}
-          datePost={sellPost.datePost}
+          key={sellPost.sellpost_id}
+          sellpost = {sellPost}
         />
-      ))}
+      )) : <></>}
     </>
   
   );
