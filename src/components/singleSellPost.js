@@ -26,7 +26,7 @@ export const SingleSellPost = ({ match }) => {
               setCurrentPost(data);
               console.log(currentUser);
             } catch (error) {
-              console.error('Error fetching sellpost:', error);
+              console.error('Error fetching the sellpost:', error);
             }
         };
         fetchASellPost();

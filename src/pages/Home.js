@@ -32,13 +32,13 @@ export const Home = () => {
       try {
         const response = await fetch('http://localhost:8080/api/category');
         if (!response.ok) {
-          throw new Error('Error fetching sellposts');
+          throw new Error('Error fetching list of category');
         }
         const data = await response.json();
         console.log(data);
         setCategoryList(data);
       } catch (error) {
-        console.error('Error fetching sellposts:', error);
+        console.error('Error fetching list of category:', error);
       }
     };
 
