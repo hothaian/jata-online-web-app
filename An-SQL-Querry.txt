@@ -24,3 +24,20 @@ JOIN
   jatadata.order o ON sc.sellpost_id = o.sellpost_id
 GROUP BY
   c.category_name;
+
+
+-- Top 5 Buyers, Total Spending, and Order Count
+SELECT
+  u.username AS buyer_username,
+  o.buyer_id,
+  SUM(o.total_price) AS total_spending,
+  COUNT(o.order_id) AS order_count
+FROM
+  jatadata.order o
+JOIN
+  jatadata.user u ON o.buyer_id = u.user_id
+GROUP BY
+  o.buyer_id
+ORDER BY
+  total_spending DESC
+LIMIT 5;

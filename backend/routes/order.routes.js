@@ -25,6 +25,7 @@ module.exports = app => {
     // Retrieve all Orders
     router.get("/", orders.findAll);
     router.get("/order-by-category", orders.findTotalOrderByCategory);
+    router.get("/top-buyer", orders.findTopBuyer);
 
   
     // Retrieve a single Order by id

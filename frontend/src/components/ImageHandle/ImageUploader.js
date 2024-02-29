@@ -22,6 +22,7 @@ const ImageUploader = () => {
     if (image && currentUser) {
       const storageRef = ref(storage, `images/${currentUser.uid}/${image.name}`);
       const uploadTask = uploadBytesResumable(storageRef, image);
+      console.log("🚀 ~ handleUpload ~ currentUser.uid:", currentUser.uid)
 
       uploadTask.on(
         'state_changed',
@@ -35,10 +36,11 @@ const ImageUploader = () => {
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setImageUrl(downloadURL);
-
+          console.log("🚀 ~ downloadURL:", downloadURL)
           // Reload the current page after successful upload
           window.location.reload();
         }
+         
       );
     }
   };

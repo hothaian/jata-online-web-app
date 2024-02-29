@@ -22,7 +22,7 @@ import { About } from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
 import PieChart from './components/Charts/PieChart';
-// import DashBoard from './pages/DashBoard';
+import BarChart from './components/Charts/BarChart';
 
 const App = () => {  
   return (
@@ -37,7 +37,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<ShoppingCart />} />
           <Route path="/piechart" element={<PieChart />} />
-
+          <Route path="/barchart" element={<BarChart/>} />
         </Routes>
       </div>
     </Router>

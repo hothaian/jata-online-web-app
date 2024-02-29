@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { Box } from "@mui/material";
+import Header from "../Header";
 
 const PieChart = () => {
   const [data, setData] = useState([]);
@@ -69,7 +70,7 @@ const PieChart = () => {
   return (
     <div>
       <Box m="20px"  >
-        <h4>Order By Category</h4>
+       <Header title="Order By Category" subtitle="Give Order Category among Orders" />
         <Box height="40vh">
           <ResponsivePie
             data={transformedData} 
