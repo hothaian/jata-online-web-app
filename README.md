@@ -1,70 +1,142 @@
-# Getting Started with Create React App
+# JATA Online Market
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Briefly describe your project, including its purpose and key features.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Separation of Concerns:** Well-organized folder structure for backend and frontend components.
+- **Database Management:** MySQL database with Sequelize for migrations and data handling.
+- **Web Service:** Eight RESTful APIs provided by the backend for various functionalities and data operations.
+- **Firebase Integration:**
+  - **Authentication:** Utilizes Firebase for user authentication, ensuring secure access to the application.
+  - **Firebase Storage:** Leverages Firebase Storage for efficient storage and retrieval of user-generated content.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React Frontend:** Utilizes React for a dynamic and responsive user interface.
+- **Additional Web Services:**
+  - **PayPal Payment Portal:** Integrated PayPal for secure and seamless payment transactions.
+  - **MySQL Database Management:** Provides APIs for efficient management and manipulation of MySQL database records.
+  - **Analytical Sales Dashboard:** Employs data analytics for visualizing sales metrics and trends.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Table of Contents
 
-### `npm test`
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prerequisites
 
-### `npm run build`
+Before you begin, ensure you have the following installed:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Node.js:** Install Node.js from [nodejs.org](https://nodejs.org/).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **MySQL Workbench:** Install MySQL Workbench from [dev.mysql.com](https://dev.mysql.com/downloads/workbench/).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Local Database:**
+   - Open MySQL Workbench and connect to your local MySQL server.
+   - Create a new database named "jatadata" using the following SQL command:
+     ```sql
+     CREATE DATABASE jatadata;
+     ```
 
-### `npm run eject`
+   Note: Ensure that your MySQL server is running before attempting to create the database.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. **Backend Configuration:**
+   - Update file `config.json` and `db.config.js` in folder `config` with your MySQL database credentials.
+     ` 
+     DB_HOST=localhost
+     DB_USER=your_username
+     DB_PASSWORD=your_password
+     DB_DATABASE=jatadata
+     `
+    Replace `your_username` and `your_password` with your MySQL server credentials.
+ - Navigate to the `backend` folder  and install dependencies
+ 
+      ```
+     cd backend
+     npm install
+     ```
+5. **Frontend and Backend Dependencies:**
+ - Open second Terminal, Navigate to the `frontend` folder  and install dependencies
+ 
+      ```
+     cd frontend
+     npm install
+     ```
+Now your project is set up with the necessary prerequisites. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Getting Started
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Follow the steps below to set up and run your project locally.
 
-## Learn More
+### Backend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. **Sync Local MySQL Database:**
+   - Make sure your local MySQL server is running.
+   - Navigate to the `backend` folder.
+   - Run the following command to synchronize your local MySQL database:
+     ```
+     npm start
+     ```
+   - This will establish a connection to your local MySQL server and sync the database.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. **Run Sequelize Migrations:**
+   - Once the database is synced, terminate the process (`Ctrl + C`).
+   - Run the following command to apply Sequelize migrations and load data into the tables:
+     ```
+     npx sequelize db:migrate
+     ```
 
-### Code Splitting
+### Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Start Frontend Development Server:**
+   - Navigate to the `frontend` folder.
+   - Start the development server:
+     ```bash
+     npm start
+     ```
 
-### Analyzing the Bundle Size
+2. **Access the App:**
+   - Open your web browser and visit [http://localhost:3000](http://localhost:3000).
+   - You should see your React app running locally.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Now your project's backend is synchronized with the local MySQL database, and the frontend is accessible at [http://localhost:3000](http://localhost:3000). 
+backend is accessible at [http://localhost:8080](http://localhost:8080).
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+## Folder Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Briefly describe the purpose of each major folder in your project.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```plaintext
+project-root/
+│
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── migrations/         # Store data for "jatadata" database
+│   ├── models/
+│   ├── routes/
+│   ├── index.js
+│
+└── frontend/
+    ├── public/
+    ├── src/
+    │   ├── components/
+    │   ├── context/
+    │   ├── pages/
+    │   ├── firebase/       # Firebase configuration and services
+    │   ├── App.js
+    │   ├── App.css
+    │   ├── index.js
+    └── index.css
+    ├── package.json
