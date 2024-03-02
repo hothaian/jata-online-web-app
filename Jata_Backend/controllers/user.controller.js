@@ -125,7 +125,7 @@ exports.update = (req, res) => {
           message: "User was updated successfully."
         });
       } else {
-        res.send({
+        res.status(404).send({
           message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
         });
       }

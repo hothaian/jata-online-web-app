@@ -45,7 +45,11 @@ exports.create = async (req, res) => {
 
   // Save Order in the database
     const order = await Order.create(postedorder);
-    res.status(201).json({ message: 'Order created successfully', shippingAddress });
+    Order.findByPk(order.order_id, {include: ['seller','buyer','shipping_address']})
+      .then(data => {
+        res.status(201).json({ message: 'Order created successfully', data});
+      })
+   
   }catch (error) {
       console.error('Error creating SellPost:', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -54,7 +58,7 @@ exports.create = async (req, res) => {
 
 // Retrieve all orders from the database
 exports.findAll = (req, res) => {
-  Order.findAll()
+  Order.findAll({include: ['seller','buyer','shipping_address']})
     .then(data => {
       res.send(data);
     })

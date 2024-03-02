@@ -47,8 +47,30 @@ exports.create = async (req, res) => {
   }));
   // Extract the category instances from the result of Promise.all
   const categoryInstances = categories.map(([category]) => category);
-  await sellPost.addCategories(categoryInstances);
-  res.status(201).json({ message: 'SellPost created successfully', sellPost });
+    await sellPost.addCategories(categoryInstances);
+    SellPost.findByPk(sellPost.sellpost_id, {
+      include:['seller',
+        {
+          model: Category,
+          as: 'categories' // Specify the alias used in the association
+        },
+        {
+          model: Comment,
+          as: 'comments', // Alias for the comments association
+          include: [
+            {
+              model: User,
+              as: 'user', // Alias for the user association of the comment
+            }
+          ]
+        }
+      ]
+    }).then(data => {
+      if (data) {
+        res.status(201).json({ message: 'SellPost created successfully', data });
+      }
+    })
+    
   } catch (error) {
   console.error('Error creating SellPost:', error);
   res.status(500).json({ message: 'Internal server error' });

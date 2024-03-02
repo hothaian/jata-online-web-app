@@ -60,10 +60,12 @@ exports.findOne = (req, res) => {
           },
           {
             model: Category,
-            as: 'categories' // Specify the alias used in the association
+            as: 'categories', // Specify the alias used in the association
+            attributes: { exclude: ['sellpostcategory'] },
+
           }
         ],
-        
+        attributes: { exclude: ['sellpostcategory'] },
         order: [['sellpost_id', 'DESC']]
       }
     ]
