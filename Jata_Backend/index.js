@@ -1,5 +1,6 @@
+require("dotenv").config();
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 
 const app = express();
 
@@ -7,7 +8,7 @@ const app = express();
 //   origin: "http://localhost:8081"
 // };
 
-// app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -17,7 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require("./models/connection.js");
 
-db.sequelize.sync()
+db.sequelize
+  .sync()
   .then(() => {
     console.log("Synced db.");
   })

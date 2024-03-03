@@ -1,35 +1,39 @@
 // /src/pages/Home.js
 
-import React, { useEffect, useState } from 'react';
-import logoImage from '../images/jata_black.png'; // Adjust the path to your logo image
-import { sellPosts } from '../hardCodeData/sellPostData';
-import { SellPost } from '../components/SellPost';
+import React, { useEffect, useState } from "react";
+import logoImage from "../images/jata_black.png"; // Adjust the path to your logo image
+import { sellPosts } from "../hardCodeData/sellPostData";
+import { SellPost } from "../components/SellPost";
 
 export const Home = () => {
   const [sellPostList, setSellPostList] = useState([]);
-  const [activeCategory, setActiveCategory] = useState('All'); // Default active category
-
-
-  
+  const [activeCategory, setActiveCategory] = useState("All"); // Default active category
 
   //Effect for Sell Post
-  useEffect(()=>{
+  useEffect(() => {
     setSellPostList(sellPosts);
-  },[])
-  const filteredSellPosts = activeCategory === 'All' ? sellPostList : sellPostList.filter(post => post.category === activeCategory);
+  }, []);
+  const filteredSellPosts =
+    activeCategory === "All"
+      ? sellPostList
+      : sellPostList.filter((post) => post.category === activeCategory);
 
-  const categories = ['All', ...new Set(sellPosts.map(post => post.category))];
-  
+  const categories = [
+    "All",
+    ...new Set(sellPosts.map((post) => post.category)),
+  ];
+  console.log(filteredSellPosts);
 
   return (
-
     <>
       <nav>
         <ul className="nav nav-tabs">
           {categories.map((category, index) => (
             <li key={index} className="nav-item">
               <button
-                className={`nav-link ${activeCategory === category ? 'active' : ''}`}
+                className={`nav-link ${
+                  activeCategory === category ? "active" : ""
+                }`}
                 onClick={() => setActiveCategory(category)}
               >
                 {category}
@@ -53,18 +57,9 @@ export const Home = () => {
           picUrl={sellPost.picUrl}
           category={sellPost.category}
           datePost={sellPost.datePost}
+          post={{ ...sellPost, id: index }}
         />
       ))}
     </>
-  
   );
 };
-
- 
-
-
-
-
-
-
-
