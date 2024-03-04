@@ -16,13 +16,15 @@ import NavBar from './components/NavBar';
 import {ShoppingCart} from './components/ShoppingCart';
 import Login from './components/LoginWindow';
 import SignUp from './components/SignUp';
+import AddSellPost from './components/AddSellPost';
+import PieChart from './components/Charts/PieChart';
+import BarChart from './components/Charts/BarChart';
 
 //PAGES
 import { About } from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
-import PieChart from './components/Charts/PieChart';
-import BarChart from './components/Charts/BarChart';
+
 
 const App = () => {  
   return (
@@ -38,6 +40,7 @@ const App = () => {
           <Route path="/cart" element={<ShoppingCart />} />
           <Route path="/piechart" element={<PieChart />} />
           <Route path="/barchart" element={<BarChart/>} />
+          <Route path="/add-sell-post" element={<AddSellPost/>} />
         </Routes>
       </div>
     </Router>

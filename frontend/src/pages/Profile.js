@@ -8,6 +8,7 @@ import ImageUploader from '../components/ImageHandle/ImageUploader';
 import ImageList from '../components/ImageHandle/ImageList';
 import PieChart from '../components/Charts/PieChart';
 import DashBoard from './DashBoard';
+import AddSellPost from '../components/AddSellPost';
 
 
 const Profile = () => {
@@ -36,8 +37,8 @@ const Profile = () => {
             <strong>Email:</strong> {currentUser.email}
           </p>
 
-          <ImageUploader/>
-          <ImageList/>
+
+          <AddSellPost/>
           <DashBoard/>
         </>
       ) : null}

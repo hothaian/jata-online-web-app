@@ -1,57 +1,67 @@
-/**
- * Author: An  Ho
- */
-import React, { useState } from 'react';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { useAuth } from '../../context/AuthContext'; // Adjust the path based on your actual file structure
+import React, { useState, useEffect } from 'react';
+import { listAll, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useAuth } from '../../context/AuthContext';
 import { storage } from '../../firebase/firebase';
 
 const ImageUploader = () => {
   const { currentUser } = useAuth();
-  const [image, setImage] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrls, setImageUrls] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0); // State for triggering refresh
 
-  const handleChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        if (currentUser) {
+          const imagesRef = ref(storage, `images/${currentUser.uid}`);
+          const imageList = await listAll(imagesRef);
+
+          const urlsPromises = imageList.items.map(async (itemRef) => {
+            const url = await getDownloadURL(itemRef);
+            return url;
+          });
+
+          const urls = await Promise.all(urlsPromises);
+          setImageUrls(urls);
+        }
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+
+    fetchImages();
+  }, [currentUser, refreshKey]);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
   };
 
-  const handleUpload = () => {
-    if (image && currentUser) {
-      const storageRef = ref(storage, `images/${currentUser.uid}/${image.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, image);
-      console.log("🚀 ~ handleUpload ~ currentUser.uid:", currentUser.uid)
-
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress);
-        },
-        (error) => {
-          console.error(error.message);
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          setImageUrl(downloadURL);
-          console.log("🚀 ~ downloadURL:", downloadURL)
-          // Reload the current page after successful upload
-          window.location.reload();
-        }
-         
-      );
+  const handleUpload = async () => {
+    try {
+      if (selectedImage) {
+        const storageRef = ref(storage, `images/${currentUser.uid}/${selectedImage.name}`);
+        await uploadBytes(storageRef, selectedImage);
+        setSelectedImage(null);
+        // Trigger a refresh of the ImageList component
+        setRefreshKey((prevKey) => prevKey + 1);
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
     }
   };
 
   return (
     <div>
-      <h2>Image Upload (FireBase Storage For Large File)</h2>
-      <input type="file" onChange={handleChange} />
-      <button onClick={handleUpload}>Upload</button>
-      {progress > 0 && <progress value={progress} max="100" />}
-      {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ maxWidth: '300px' }} />}
+      <p></p>
+      <p>Add Image For Sell Post:</p>
+      <div>
+        <input type="file" onChange={handleImageChange} />
+        <button onClick={handleUpload}>Upload Image</button>
+      </div>
+      {imageUrls.map((url, index) => (
+        <img key={index} src={url} alt={`Image ${index}`} style={{ maxWidth: '300px', margin: '10px' }} />
+      ))}
     </div>
   );
 };
