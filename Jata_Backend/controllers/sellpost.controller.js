@@ -2,6 +2,7 @@ const db = require("../models/connection");
 const SellPost = db.SellPost;
 const Category = db.Category;
 const User = db.User;
+const Comment = db.Comment;
 // Create and Save a new SellPost
 exports.create = async (req, res) => {
   try {
@@ -46,8 +47,30 @@ exports.create = async (req, res) => {
   }));
   // Extract the category instances from the result of Promise.all
   const categoryInstances = categories.map(([category]) => category);
-  await sellPost.addCategories(categoryInstances);
-  res.status(201).json({ message: 'SellPost created successfully', sellPost });
+    await sellPost.addCategories(categoryInstances);
+    SellPost.findByPk(sellPost.sellpost_id, {
+      include:['seller',
+        {
+          model: Category,
+          as: 'categories' // Specify the alias used in the association
+        },
+        {
+          model: Comment,
+          as: 'comments', // Alias for the comments association
+          include: [
+            {
+              model: User,
+              as: 'user', // Alias for the user association of the comment
+            }
+          ]
+        }
+      ]
+    }).then(data => {
+      if (data) {
+        res.status(201).json({ message: 'SellPost created successfully', data });
+      }
+    })
+    
   } catch (error) {
   console.error('Error creating SellPost:', error);
   res.status(500).json({ message: 'Internal server error' });
@@ -56,15 +79,32 @@ exports.create = async (req, res) => {
 
 // Retrieve all SellPosts from the database.
 exports.findAll = (req, res) => {
-  SellPost.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving SellPosts."
-      });
+  const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+  const limit = parseInt(req.query.limit) || 5; // Default to 5 sellposts per page
+  const offset = (page - 1) * limit;
+  
+  SellPost.findAll({
+    include: [{
+      model: User,
+      as: 'seller'
+    },
+    {
+      model: Category,
+      as: 'categories' // Specify the alias used in the association
+    }
+  ],
+    order: [
+      ['sellpost_id', 'DESC'] // Order by createdAt field in descending order
+    ]
+  })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving SellPosts."
     });
+  });
 };
 
 // Find a single SellPost with an id
@@ -76,6 +116,16 @@ exports.findOne = (req, res) => {
       {
         model: Category,
         as: 'categories' // Specify the alias used in the association
+      },
+      {
+        model: Comment,
+        as: 'comments', // Alias for the comments association
+        include: [
+          {
+            model: User,
+            as: 'user', // Alias for the user association of the comment
+          }
+        ]
       }
     ]
   })

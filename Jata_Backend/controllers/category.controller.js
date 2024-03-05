@@ -1,7 +1,7 @@
 const db = require("../models/connection");
 const Category = db.Category;
 const SellPost = db.SellPost;
-
+const User = db.User;
 // Create and save a new category
 exports.create = (req, res) => {
   const { category_name } = req.body;
@@ -52,7 +52,21 @@ exports.findOne = (req, res) => {
     include:[
       {
         model: SellPost,
-        as: 'sellposts' // Specify the alias used in the association
+        as: 'sellposts', // Specify the alias used in the association
+        include: [
+          {
+            model: User,
+            as: 'seller', // Alias for the user association of the comment
+          },
+          {
+            model: Category,
+            as: 'categories', // Specify the alias used in the association
+            attributes: { exclude: ['sellpostcategory'] },
+
+          }
+        ],
+        attributes: { exclude: ['sellpostcategory'] },
+        order: [['sellpost_id', 'DESC']]
       }
     ]
   })

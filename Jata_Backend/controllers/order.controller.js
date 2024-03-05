@@ -2,10 +2,6 @@ const db = require("../models/connection");
 const Order = db.Order;
 const Address = db.Address;
 const User = db.User;
-const Category = db.Category;
-const SellPost = db.SellPost
-const sequelize = db.sequelize;
-
 
 // Create a new order
 exports.create = async (req, res) => {
@@ -49,7 +45,11 @@ exports.create = async (req, res) => {
 
   // Save Order in the database
     const order = await Order.create(postedorder);
-    res.status(201).json({ message: 'Order created successfully', shippingAddress });
+    Order.findByPk(order.order_id, {include: ['seller','buyer','shipping_address']})
+      .then(data => {
+        res.status(201).json({ message: 'Order created successfully', data});
+      })
+   
   }catch (error) {
       console.error('Error creating SellPost:', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -58,7 +58,7 @@ exports.create = async (req, res) => {
 
 // Retrieve all orders from the database
 exports.findAll = (req, res) => {
-  Order.findAll()
+  Order.findAll({include: ['seller','buyer','shipping_address']})
     .then(data => {
       res.send(data);
     })
@@ -151,64 +151,4 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all orders."
       });
     });
-};
-
-
-
-//An Ho - SQL Querry
-exports.findTotalOrderByCategory = (req, res) => {
-  sequelize.query(
-    `SELECT c.category_name, COUNT(o.order_id) AS order_count
-    FROM jatadata.category c
-    JOIN jatadata.sellpostcategory sc ON c.category_id = sc.category_id
-    JOIN jatadata.order o ON sc.sellpost_id = o.sellpost_id
-    GROUP BY c.category_name;`,
-    { type: sequelize.QueryTypes.SELECT }
-  )
-  .then(data => {
-    res.status(200).json({      
-      message: 'Orders grouped by category retrieved successfully',
-      data: data
-    });
-  })
-  .catch(err => {
-    res.status(500).json({
-      status: 'error',
-      message: 'Error retrieving orders grouped by category',
-      error: err.message
-    });
-  });
-};
-
-exports.findTopBuyer= (req, res) => {
-  sequelize.query(
-    `SELECT
-    u.username AS buyer_username,
-    o.buyer_id,
-    SUM(o.total_price) AS total_spending,
-    COUNT(o.order_id) AS order_count
-  FROM
-    jatadata.order o
-  JOIN
-    jatadata.user u ON o.buyer_id = u.user_id
-  GROUP BY
-    o.buyer_id
-  ORDER BY
-    total_spending DESC
-  LIMIT 5;`,
-    { type: sequelize.QueryTypes.SELECT }
-  )
-  .then(data => {
-    res.status(200).json({      
-      message: 'Orders grouped by category retrieved successfully',
-      data: data
-    });
-  })
-  .catch(err => {
-    res.status(500).json({
-      status: 'error',
-      message: 'Error retrieving orders grouped by category',
-      error: err.message
-    });
-  });
 };
