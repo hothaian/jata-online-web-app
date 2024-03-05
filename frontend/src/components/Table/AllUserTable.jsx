@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "./theme";
+import { tokens } from "../Charts/theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
-const Table = () => {
+const AllUserTable = () => {
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState([]);
@@ -200,4 +200,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default AllUserTable;

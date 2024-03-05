@@ -1,7 +1,9 @@
 import React from 'react'
 import PieChart from '../components/Charts/PieChart'
 import BarChart from '../components/Charts/BarChart'
-import Table from '../components/Charts/Table'
+
+import AllUserTable from '../components/Table/AllUserTable'
+import SellPostTable from '../components/Table/SellPostTable'
 
 function DashBoard() {
   return (
@@ -9,7 +11,9 @@ function DashBoard() {
       <h3>USER DASH BOARD</h3>
       <PieChart/>
       <BarChart/>
-      <Table/>
+      <SellPostTable/>
+      <AllUserTable/>
+
     </div>
   )
 }

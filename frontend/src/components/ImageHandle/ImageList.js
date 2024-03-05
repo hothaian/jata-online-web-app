@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { listAll, getDownloadURL, ref } from 'firebase/storage';
-import { useAuth } from '../../context/AuthContext'; // Adjust the path based on your actual file structure
+import { useAuth } from '../../context/AuthContext'; 
 import { storage } from '../../firebase/firebase';
 
 const ImageList = () => {
