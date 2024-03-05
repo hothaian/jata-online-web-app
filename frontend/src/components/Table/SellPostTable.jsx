@@ -1,8 +1,11 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { useAuth } from "../../context/AuthContext";
 const SellPostTable = () => {
+
+    const { currentUser } = useAuth();
+
     const columns = [
         { id: 'sellpost_id', name: 'Sell Post ID' },
         { id: 'seller_id', name: 'Seller ID' },
