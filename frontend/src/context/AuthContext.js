@@ -27,6 +27,20 @@ export function AuthProvider({ children }) {
   async function initializeUser(user) {
     if (user) {
 
+      try {
+        const response = await fetch('http://localhost:8080/api/user/email/'+user.email); 
+        if (!response.ok) {
+          throw new Error('Failed to get the user via email: ' + user.email);
+        }
+        const data = await response.json();
+        user.user_id = data.user_id;
+        console.log(data);
+        console.log("Found the match email of the user");
+      } catch (error) {
+        console.log("Can not Find the match email of the user");
+        console.error('Error fetching the user via email:', error);
+      }
+
       setCurrentUser({ ...user });
 
       // check if provider is email and password login
