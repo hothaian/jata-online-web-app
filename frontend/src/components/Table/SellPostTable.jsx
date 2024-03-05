@@ -18,59 +18,59 @@ const SellPostTable = () => {
     ];
 
     const handlechangepage = (event, newpage) => {
-        pagechange(newpage)
+        pagechange(newpage);
     }
 
     const handleRowsPerPage = (event) => {
-        rowperpagechange(+event.target.value)
+        rowperpagechange(+event.target.value);
         pagechange(0);
     }
 
     const [rows, rowchange] = useState([]);
     const [page, pagechange] = useState(0);
     const [rowperpage, rowperpagechange] = useState(5);
-    const [sellerIdFilter, setSellerIdFilter] = useState('');
     const [sellpostIdFilter, setSellPostIdFilter] = useState('');
+    const [filteredRows, setFilteredRows] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:8080/api/sellposts")
             .then(response => {
-                rowchange(response.data);
+                const initialRows = response.data;
+                rowchange(initialRows);
+                setFilteredRows(initialRows);
             })
             .catch(error => {
                 console.error("Error fetching sell posts:", error.message);
             });
-
-    }, [])
+    }, []);
 
     const handleFilterSubmit = () => {
-        // Optionally, you can add additional logic here before applying the filter
-        // For simplicity, we're directly setting the filter values in this example
-        // You can add validation or modify the behavior based on your requirements
-
         // Apply the filters
-        const filteredRows = rows.filter(row => 
-            String(row.seller_id).toLowerCase().includes(sellerIdFilter.toLowerCase()) &&
+        const filteredRows = rows.filter(row =>
             String(row.sellpost_id).toLowerCase().includes(sellpostIdFilter.toLowerCase())
         );
-        
+
         // Update the state with the filtered rows
         setFilteredRows(filteredRows);
+
+        // Reset pagination to the first page
+        pagechange(0);
     }
 
-    const [filteredRows, setFilteredRows] = useState([]);
+    const handleShowAll = () => {
+        // Reset filter values
+        setSellPostIdFilter('');
+
+        // Reset filteredRows to display all rows
+        setFilteredRows(rows);
+
+        // Reset pagination to the first page
+        pagechange(0);
+    };
 
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>SELL POST LIST</h1>
-
-            {/* Input box for seller_id filter */}
-            <TextField
-                label="Filter by Seller ID"
-                value={sellerIdFilter}
-                onChange={(e) => setSellerIdFilter(e.target.value)}
-                style={{ marginBottom: '10px', marginRight: '10px' }}
-            />
 
             {/* Input box for sellpost_id filter */}
             <TextField
@@ -81,12 +81,17 @@ const SellPostTable = () => {
             />
 
             {/* Filter button */}
-            <Button variant="contained" color="primary" onClick={handleFilterSubmit} style={{ marginBottom: '10px' }}>
+            <Button variant="contained" color="primary" onClick={handleFilterSubmit} style={{ marginBottom: '10px', marginRight: '10px' }}>
                 Filter
             </Button>
 
+            {/* Show All button */}
+            <Button variant="contained" color="primary" onClick={handleShowAll} style={{ marginBottom: '10px' }}>
+                Show All
+            </Button>
+
             <Paper sx={{ width: '90%', marginLeft: '5%' }}>
-                <TableContainer sx={{maxHeight:450}}>
+                <TableContainer sx={{ maxHeight: 450 }}>
                     <Table stickyHeader>
                         <TableHead>
                             <TableRow>
@@ -101,20 +106,20 @@ const SellPostTable = () => {
                                 .map((row, i) => (
                                     <TableRow key={i}>
                                         {columns.map((column, i) => {
-                                            if (column.id === 'picUrl') {
-                                                return (
-                                                    <TableCell key={i}>
-                                                        <img src={row[column.id]} alt="Post Image" style={{ width: '50px', height: '50px' }} />
-                                                    </TableCell>
-                                                );
-                                            } else {
-                                                let value = row[column.id];
-                                                return (
-                                                    <TableCell key={value}>
-                                                        {value}
-                                                    </TableCell>
-                                                );
-                                            }
+                                            let value = row[column.id];
+                                            return (
+                                                <TableCell key={i}>
+                                                    {value != null && value !== '' ? (
+                                                        column.id === 'picUrl' ? (
+                                                            <img src={value} alt="Post Image" style={{ width: '50px', height: '50px' }} />
+                                                        ) : (
+                                                            value
+                                                        )
+                                                    ) : (
+                                                        <span style={{ color: 'gray' }}>N/A</span>
+                                                    )}
+                                                </TableCell>
+                                            );
                                         })}
                                     </TableRow>
                                 ))}
