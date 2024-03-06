@@ -168,18 +168,13 @@ module.exports = {
 
             
       const ordersData = [
-        { seller_id: 1, buyer_id: 2, sellpost_id: 1, quantity: 2, total_price: 31.98, order_shipping_state: 'Shipped', shipping_address_id: 1, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 2, buyer_id: 3, sellpost_id: 2, quantity: 1, total_price: 59.99, order_shipping_state: 'Pending', shipping_address_id: 2, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 3, buyer_id: 4, sellpost_id: 3, quantity: 1, total_price: 89.50, order_shipping_state: 'Pending', shipping_address_id: 3, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 4, buyer_id: 5, sellpost_id: 4, quantity: 1, total_price: 129.99, order_shipping_state: 'Pending', shipping_address_id: 4, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 5, buyer_id: 6, sellpost_id: 5, quantity: 2, total_price: 99.98, order_shipping_state: 'Pending', shipping_address_id: 5, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 6, buyer_id: 7, sellpost_id: 6, quantity: 1, total_price: 29.99, order_shipping_state: 'Pending', shipping_address_id: 6, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 7, buyer_id: 8, sellpost_id: 7, quantity: 3, total_price: 59.97, order_shipping_state: 'Pending', shipping_address_id: 7, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 8, buyer_id: 9, sellpost_id: 8, quantity: 2, total_price: 159.98, order_shipping_state: 'Pending', shipping_address_id: 8, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 9, buyer_id: 10, sellpost_id: 9, quantity: 1, total_price: 39.99, order_shipping_state: 'Pending', shipping_address_id: 9, createdAt: currentDate, updatedAt: currentDate },
-        { seller_id: 10, buyer_id: 1, sellpost_id: 10, quantity: 1, total_price: 299.99, order_shipping_state: 'Pending', shipping_address_id: 10, createdAt: currentDate, updatedAt: currentDate }
+        {order_id: 1 ,buyer_id: 2, total_price: 31.98, order_shipping_state: 'Shipped', shipping_address_id: 1, createdAt: currentDate, updatedAt: currentDate }
       ];
 
+      const orderedItem = [
+        {order_id: 1, quantity: 1, sellpost_id: 1, createdAt: currentDate, updatedAt: currentDate},
+        {order_id: 1, quantity: 2, sellpost_id: 2, createdAt: currentDate, updatedAt: currentDate},
+      ]
 
       // Insert data into 'user' table
       await queryInterface.bulkInsert('user', usersData, { returning: true });
@@ -200,7 +195,8 @@ module.exports = {
 
       // Insert data into 'order' table
       await queryInterface.bulkInsert('order', ordersData);
-    
+      
+      await queryInterface.bulkInsert('ordereditem', orderedItem);
 
       console.log('Migration successful');
 

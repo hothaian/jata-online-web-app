@@ -120,7 +120,7 @@ module.exports = app => {
 
 
 
-    router.post("/", orders.create);
+    router.post("/", orders.createOrder);
   
 /**
  *  @swagger
@@ -182,7 +182,7 @@ module.exports = app => {
 
 
 
-    router.get("/", orders.findAll);
+    router.get("/", orders.getAllOrders );
   
     // Retrieve a single Order by id
 
@@ -293,7 +293,7 @@ module.exports = app => {
  *          format: date-time
  */
   
-    router.get("/:orderId", orders.findOne);
+    router.get("/:orderId", orders.getOrder);
   
     // Update a Order by id
 /**
@@ -377,7 +377,7 @@ module.exports = app => {
  */
 
 
-    router.put("/:orderId", orders.update);
+    router.put("/:orderId", orders.updateOrder);
   
     // Delete a Order by id
    // router.delete("/:orderId", orders.delete);
