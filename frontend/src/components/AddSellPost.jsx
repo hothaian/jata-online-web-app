@@ -11,15 +11,19 @@ import {
   IconButton,
   Stack,
   TextField,
+  MenuItem,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ImageUploader from "./ImageHandle/ImageUploader";
+import { useAuth } from '../context/AuthContext'
 import axios from "axios";
 
 const AddSellPost = () => {
   const [open, setOpen] = useState(false);
+  const { userLoggedIn, currentUser, getToken } = useAuth();
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
-    seller_id: 2,
+    seller_id: currentUser.user_id,
     item_name: "",
     description: "",
     price: "",
@@ -30,7 +34,7 @@ const AddSellPost = () => {
     brand: "",
     picUrl: "pictureurl", // Update with actual image URL
     condition: "",
-    categoryNames: ["Shoe"],
+    categoryNames: categories,
   });
 
   const handleOpenPopup = () => {
@@ -43,15 +47,27 @@ const AddSellPost = () => {
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if(name === 'quantity'){
+      console.log(name);
+      console.log(value);
+
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: parseInt(value),
+      }));
+    }else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+
   };
 
   const handleFormSubmit = async () => {
     try {
       console.log(formData);
+      formData.categoryNames = categories;
       const response = await axios.post(
         "http://localhost:8080/api/sellposts",
         formData,{        headers: {
@@ -59,13 +75,13 @@ const AddSellPost = () => {
           },}
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         // Handle successful response (e.g., show a success message)
         console.log("Sell post submitted successfully!");
         handleClosePopup();
       } else {
         // Handle error response (e.g., show an error message)
-        console.error("Failed to submit sell post:", response.statusText);
+        console.error("Failed to submit sell post:", response);
       }
       handleClosePopup();
     } catch (error) {
@@ -73,17 +89,34 @@ const AddSellPost = () => {
     }
   };
 
-  const handleCategoryChange = (event) => {
-    const { value } = event.target;
+  const handleCategoryChange = () => {
+    
     setFormData((prevData) => ({
       ...prevData,
-      categoryNames: value.split(",").map((category) => category.trim()),
+      categoryNames: categories,
+    }));
+  };
+  const handleCheckboxChange = (event) => {
+    const categoryName = event.target.name;
+    if (event.target.checked) {
+      setCategories([...categories, categoryName]);
+      setFormData((prevData) => ({
+        ...prevData,
+        categoryNames: categories,
+      }));
+    } else {
+      setCategories(categories.filter((category) => category !== categoryName));
+    }
+    console.log(categories);
+    setFormData((prevData) => ({
+      ...prevData,
+      categoryNames: categories,
     }));
   };
 
-
   const handleUploadComplete = (downloadURL) => {
     // Update the picUrl in formData with the downloaded image URL
+    console.log(downloadURL);
     setFormData((prevData) => ({
       ...prevData,
       picUrl: downloadURL,
@@ -140,13 +173,25 @@ const AddSellPost = () => {
               value={formData.size}
               onChange={handleFormChange}
             />
-            <TextField
+            {/* <TextField
               variant="outlined"
               label="Gender"
               name="gender"
               value={formData.gender}
               onChange={handleFormChange}
-            />
+            /> */}
+            <TextField
+                variant="outlined"
+                label="Gender"
+                name="gender"
+                select
+                value={formData.gender}
+                onChange={handleFormChange}
+              >
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Unisex">Unisex</MenuItem>
+              </TextField>
             <TextField
               variant="outlined"
               label="Color"
@@ -161,20 +206,54 @@ const AddSellPost = () => {
               value={formData.brand}
               onChange={handleFormChange}
             />
-            <TextField
+            {/* <TextField
               variant="outlined"
               label="Condition"
               name="condition"
               value={formData.condition}
               onChange={handleFormChange}
-            />
+            /> */}
             <TextField
+              variant="outlined"
+              label="Condition"
+              name="condition"
+              select
+              value={formData.condition}
+              onChange={handleFormChange}
+            >
+              <MenuItem value="New">New</MenuItem>
+              <MenuItem value="Used">Used</MenuItem>
+            </TextField>
+            {/* <TextField
               variant="outlined"
               label="Category Names (comma-separated)"
               name="categoryNames"
               value={formData.categoryNames.join(", ")}
               onChange={handleCategoryChange}
-            />
+            /> */}
+       
+      <div>
+        <FormControlLabel
+          control={<Checkbox checked={categories.includes('Clothing')} onChange={handleCheckboxChange} name="Clothing" />}
+          label="Clothing"
+        />
+        <FormControlLabel
+          control={<Checkbox checked={categories.includes('Shoes')} onChange={handleCheckboxChange} name="Shoes" />}
+          label="Shoes"
+        />
+        <FormControlLabel
+          control={<Checkbox checked={categories.includes('Accessories')} onChange={handleCheckboxChange} name="Accessories" />}
+          label="Accessories"
+        />
+        <FormControlLabel
+          control={<Checkbox checked={categories.includes('Men')} onChange={handleCheckboxChange} name="Men" />}
+          label="Men"
+        />
+        <FormControlLabel
+          control={<Checkbox checked={categories.includes('Women')} onChange={handleCheckboxChange} name="Women" />}
+          label="Women"
+        />
+      </div>
 
             <ImageUploader onUploadComplete={handleUploadComplete} />
             <FormControlLabel

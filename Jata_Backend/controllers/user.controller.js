@@ -88,6 +88,30 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.findOneByEmail = (req, res) => {
+  const email = req.params.userEmail;
+
+  User.findOne({
+    where: {
+      email: email
+    }
+  })
+  .then(user => {
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({
+        message: `User with email=${email} not found.`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: `Error retrieving User with email=${email}: ${err.message}`
+    });
+  });
+};
+
 // Update a User by the id in the request
 exports.update = (req, res) => {
   const id = req.params.userId;
@@ -101,7 +125,7 @@ exports.update = (req, res) => {
           message: "User was updated successfully."
         });
       } else {
-        res.send({
+        res.status(404).send({
           message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
         });
       }

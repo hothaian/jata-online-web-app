@@ -24,6 +24,8 @@ import BarChart from './components/Charts/BarChart';
 import { About } from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
+import { SingleSellPost } from './components/singleSellPost';
+import { CategorySellPost } from './components/CategorySellPost';
 
 
 const App = () => {  
@@ -41,6 +43,9 @@ const App = () => {
           <Route path="/piechart" element={<PieChart />} />
           <Route path="/barchart" element={<BarChart/>} />
           <Route path="/add-sell-post" element={<AddSellPost/>} />
+          <Route path="/sellpost/:post_id" element={<SingleSellPost />} />
+          <Route path="/category/:category_id" element={<CategorySellPost />} />
+
         </Routes>
       </div>
     </Router>

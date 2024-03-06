@@ -1,7 +1,4 @@
 const dbConfig = require("../config/db.config.js");
-
-
-
 const UserModel = require("./user.model.js");
 const SellPostModel = require("./sellpost.model.js");
 const Sequelize = require("sequelize");
@@ -23,10 +20,11 @@ db.SellPost = require("./sellpost.model.js")(sequelize, Sequelize);
 db.Address = require("./address.model.js")(sequelize, Sequelize);
 db.Category = require("./category.model.js")(sequelize, Sequelize);
 db.Order = require("./order.model.js")(sequelize, Sequelize);
+db.Comment = require("./comment.model.js")(sequelize, Sequelize);
 
 
 
-const { User, SellPost, Address, Category, Order } = sequelize.models;
+const { User, SellPost, Address, Category, Order, Comment } = sequelize.models;
 User.hasMany(SellPost, { foreignKey: "seller_id", as: "sellPosts" });
 User.hasMany(Address, { foreignKey: "user_id", as: "addresses" });
 
@@ -37,6 +35,11 @@ SellPost.belongsTo(User, { foreignKey: "seller_id", as: "seller" });
 Category.belongsToMany(SellPost, { through: 'sellpostcategory',as:'sellposts' ,foreignKey: 'category_id' });
 
 SellPost.belongsToMany(Category, { through: 'sellpostcategory', as:'categories', foreignKey: 'sellpost_id' });
+SellPost.hasMany(Comment, { foreignKey: "sellpost_id", as: "comments" });
+
+Comment.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+
 
 Order.belongsTo(User, { foreignKey: "seller_id", as: "seller"} );
 Order.belongsTo(User, { foreignKey: "buyer_id", as: "buyer"} );
