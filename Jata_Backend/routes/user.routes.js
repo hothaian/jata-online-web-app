@@ -512,6 +512,7 @@ module.exports = app => {
   
     // Delete all user
     //router.delete("/", user.deleteAll);
-  
+    
+    router.post("/noAddress", user.createWithNoAddress);
     app.use('/api/user', router);
   };

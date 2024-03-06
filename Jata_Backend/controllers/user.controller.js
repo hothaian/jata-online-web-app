@@ -1,8 +1,44 @@
 const db = require("../models/connection");
 const User = db.User;
 const Address = db.Address;
+
+
+exports.createWithNoAddress = async (req, res) => {
+  try{
+  // Validate request
+  if (!req.body.username || !req.body.email) {
+    res.status(400).send({
+      message: "Username and Email cannot be empty!"
+    });
+    return;
+  }
+
+
+
+  // Create a User
+  const user = {
+    username: req.body.username,
+    email: req.body.email,
+    role_id: req.body.role_id,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    gender: req.body.gender,
+    date_of_birth: req.body.date_of_birth,
+    profile_picture: req.body.profile_picture
+  };
+
+  // Save User in the database
+  const postedUser = await User.create(user);
+  res.status(201).json({ message: 'User created successfully', postedUser });
+  }catch(error) {
+    console.error('Error creating User:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
  
-// Create and Save a new User
+};
+
+
+// Create and Save a new User with Adress
 exports.create = async (req, res) => {
   try{
   // Validate request

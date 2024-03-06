@@ -5,19 +5,7 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true
       },
-      seller_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       buyer_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      sellpost_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      quantity: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
