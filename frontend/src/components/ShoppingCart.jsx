@@ -26,8 +26,11 @@ export const ShoppingCart = () => {
   };
 
   const removeItem = (itemId) => {
-    const updatedItems = items.filter((item) => item.id !== itemId);
-    setItems(updatedItems);
+    const index = items.findIndex((item) => item.id === itemId);
+    if (index !== -1) {
+      const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
+      setItems(updatedItems);
+    }
   };
 
   const totalPrice = items.reduce(
