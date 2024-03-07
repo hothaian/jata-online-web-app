@@ -1,154 +1,158 @@
 const db = require("../models/connection");
 const Order = db.Order;
-const Address = db.Address;
 const User = db.User;
+const Address = db.Address;
+const OrderedItem = db.OrderedItem;
+const SellPost = db.SellPost;
 
 // Create a new order
-exports.create = async (req, res) => {
-  try{
-  // Validate request
-  if (!req.body.buyer_id || !req.body.sellpost_id || !req.body.quantity || !req.body.total_price) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
-  }
+exports.createOrder = async (req, res) => {
+  try {
+    const { buyer_id, total_price, shipping_address, items } = req.body;
+    console.log(items);
+    // Create shipping address
+    const address = await Address.create(shipping_address);
 
-  // Check if seller and buyer exist
-  const [seller, buyer] = await Promise.all([
-    User.findByPk(req.body.seller_id),
-    User.findByPk(req.body.buyer_id)
-  ]);
+    // Create order
+    const order = await Order.create({
+      buyer_id: buyer_id,
+      total_price: total_price,
+      shipping_address_id: address.id,
+    });
 
-  if (!seller) {
-    return res.status(404).json({ message: 'Seller not found' });
-  }
-
-  if (!buyer) {
-    return res.status(404).json({ message: 'Buyer not found' });
-  }
-  const shipping_address = req.body.shipping_address;
-  shipping_address.user_id = req.body.buyer_id;
-  // Find or create the shipping address
-  const [shippingAddress, created] = await Address.findOrCreate({
-    where: shipping_address,
-    defaults: shipping_address // Use the provided shipping_address as default values if the address is created
-  });
-  // Create an Order object
-  const postedorder = {
-    seller_id: req.body.seller_id,
-    buyer_id: req.body.buyer_id,
-    sellpost_id: req.body.sellpost_id,
-    quantity: req.body.quantity,
-    total_price: req.body.total_price,
-    order_shipping_state: req.body.order_shipping_state || "Pending",
-    shipping_address_id: shippingAddress.address_id
-  };
-
-  // Save Order in the database
-    const order = await Order.create(postedorder);
-    Order.findByPk(order.order_id, {include: ['seller','buyer','shipping_address']})
-      .then(data => {
-        res.status(201).json({ message: 'Order created successfully', data});
+    // Create ordered items
+    await Promise.all(
+      items.map(async (item) => {
+        await OrderedItem.create({
+          order_id: order.order_id,
+          quantity: item.quantity,
+          sellpost_id: item.sellpost_id,
+        });
       })
-   
-  }catch (error) {
-      console.error('Error creating SellPost:', error);
-      res.status(500).json({ message: 'Internal server error' });
+    );
+
+    res.status(201).send({ message: "Order created successfully", order });
+  } catch (err) {
+    console.error("Error creating order:", err);
+    res.status(500).send({ message: "Internal server error" });
   }
 };
 
-// Retrieve all orders from the database
-exports.findAll = (req, res) => {
-  Order.findAll({include: ['seller','buyer','shipping_address']})
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving orders."
-      });
+// Get a single order by ID
+exports.getOrder = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    const order = await Order.findByPk(orderId, {
+      include: [
+        {
+          model: User,
+          as: "buyer",
+        },
+        {
+          model: Address,
+          as: "shipping_address",
+        },
+        {
+          model: OrderedItem,
+          as: "items",
+          include: [
+            {
+              model: SellPost,
+              as: "sellpost",
+              attributes: { exclude: ['quantity'] }, // Exclude the 'quantity' attribute
+            },
+          ],
+        },
+      ],
     });
+
+    if (!order) {
+      return res.status(404).send({ message: "Order not found" });
+    }
+
+    res.status(200).send({ order });
+  } catch (err) {
+    console.error("Error getting order:", err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 };
 
-// Find a single order with an id
-exports.findOne = (req, res) => {
-  const id = req.params.orderId;
+// Get all orders
+exports.getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      include: [
+        {
+          model: User,
+          as: "buyer",
+        },
+        {
+          model: Address,
+          as: "shipping_address",
+        },
+        {
+          model: OrderedItem,
+          as: "items",
+          include: [
+            {
+              model: SellPost,
+              as: "sellpost",
+              attributes: { exclude: ['quantity'] }, // Exclude the 'quantity' attribute
 
- // Order.findByPk(id)
-  Order.findByPk(id, {include: ['seller','buyer','shipping_address']})
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Order with id=" + id
-      });
+            },
+          ],
+        },
+      ],
     });
+
+    res.status(200).send({ orders });
+  } catch (err) {
+    console.error("Error getting orders:", err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 };
 
-// Update an order by the id in the request
-exports.update = (req, res) => {
-  const id = req.params.id;
+// Update an order
+exports.updateOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const { buyerId, shippingAddressId } = req.body;
 
-  Order.update(req.body, {
-    where: { order_id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Order was updated successfully."
-        });
-      } else {
-        res.send({
-          message: `Cannot update Order with id=${id}. Maybe Order was not found or req.body is empty!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Order with id=" + id
-      });
+    const order = await Order.findByPk(orderId);
+
+    if (!order) {
+      return res.status(404).send({ message: "Order not found" });
+    }
+
+    await order.update({
+      buyer_id: buyerId,
+      shipping_address_id: shippingAddressId,
     });
+
+    res.status(200).send({ message: "Order updated successfully", order });
+  } catch (err) {
+    console.error("Error updating order:", err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 };
 
-// Delete an order with the specified id in the request
-exports.delete = (req, res) => {
-  const id = req.params.id;
+// Delete an order
+exports.deleteOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
 
-  Order.destroy({
-    where: { order_id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Order was deleted successfully!"
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Order with id=${id}. Maybe Order was not found!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Order with id=" + id
-      });
-    });
-};
+    const order = await Order.findByPk(orderId);
 
-// Delete all orders from the database
-exports.deleteAll = (req, res) => {
-  Order.destroy({
-    where: {},
-    truncate: false
-  })
-    .then(nums => {
-      res.send({ message: `${nums} Orders were deleted successfully!` });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all orders."
-      });
-    });
+    if (!order) {
+      return res.status(404).send({ message: "Order not found" });
+    }
+
+    await order.destroy();
+
+    res.status(200).send({ message: "Order deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting order:", err);
+    res.status(500).send({ message: "Internal server error" });
+  }
 };

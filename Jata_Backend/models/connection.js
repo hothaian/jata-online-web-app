@@ -21,10 +21,10 @@ db.Address = require("./address.model.js")(sequelize, Sequelize);
 db.Category = require("./category.model.js")(sequelize, Sequelize);
 db.Order = require("./order.model.js")(sequelize, Sequelize);
 db.Comment = require("./comment.model.js")(sequelize, Sequelize);
+db.OrderedItem = require("./orderedItem.model.js")(sequelize, Sequelize);
 
 
-
-const { User, SellPost, Address, Category, Order, Comment } = sequelize.models;
+const { User, SellPost, Address, Category, Order, Comment, OrderedItem } = sequelize.models;
 User.hasMany(SellPost, { foreignKey: "seller_id", as: "sellPosts" });
 User.hasMany(Address, { foreignKey: "user_id", as: "addresses" });
 
@@ -41,11 +41,10 @@ Comment.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
 
 
-Order.belongsTo(User, { foreignKey: "seller_id", as: "seller"} );
 Order.belongsTo(User, { foreignKey: "buyer_id", as: "buyer"} );
 Order.belongsTo(Address, { foreignKey: "shipping_address_id", as: "shipping_address"} );
-
-
+Order.hasMany(OrderedItem, { foreignKey: "order_id", as: "items" })
+OrderedItem.belongsTo(SellPost, { foreignKey: "sellpost_id", as: "sellpost" });
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize; 

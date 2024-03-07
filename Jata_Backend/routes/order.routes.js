@@ -4,21 +4,27 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Order
-    //Body
-    //{
-    // "seller_id": 1,
-    // "buyer_id": 3,
-    // "sellpost_id": 1,
-    // "quantity": 2,
-    // "total_price": "31.98",
-    // "order_shipping_state": "Shipped",
-    // "shipping_address": {
+    // {
+    //   "buyer_id": 1,
+    //   "total_price": "31.98",
+    //   "shipping_address": {
+    //       "user_id": 1,
     //     "street_address": "123 Tacoma Tacoma TTacomaacoma St",
     //     "city": "Tacoma",
     //     "state": "NY",
     //     "zip_code": "10001",
     //     "country": "USA"
-    // }
+    //   },
+    //   "items": [
+    //     {
+    //       "quantity": 2,
+    //       "sellpost_id": 2
+    //     },
+    //     {
+    //       "quantity": 1,
+    //       "sellpost_id": 1
+    //     }
+    //   ]
     // }
 /**
  *  @swagger
@@ -34,27 +40,16 @@ module.exports = app => {
  *          application/json:
  *            schema:
  *              type: object
- *              required:
- *                - buyer_id
- *                - sellpost_id
- *                - quantity
- *                - total_price
  *              properties:
- *                seller_id:
- *                  type: integer
  *                buyer_id:
  *                  type: integer
- *                sellpost_id:
- *                  type: integer
- *                quantity:
- *                  type: integer
  *                total_price:
- *                  type: string
- *                order_shipping_state:
  *                  type: string
  *                shipping_address:
  *                  type: object
  *                  properties:
+ *                    user_id:
+ *                      type: integer
  *                    street_address:
  *                      type: string
  *                    city:
@@ -65,46 +60,18 @@ module.exports = app => {
  *                      type: string
  *                    country:
  *                      type: string
- *      responses:
- *        "200":
- *          description: JSON response containing the list of orders
- *          content:
- *            application/json:
- *              schema:
- *                type: array
  *                items:
- *                  type: object
- *                  properties:
- *                    order_id:
- *                      type: integer
- *                    seller_id:
- *                      type: integer
- *                    buyer_id:
- *                      type: integer
- *                    sellpost_id:
- *                      type: integer
- *                    quantity:
- *                      type: integer
- *                    total_price:
- *                      type: string
- *                    order_shipping_state:
- *                      type: string
- *                    shipping_address_id:
- *                      type: integer
- *                    createdAt:
- *                      type: string
- *                      format: date-time
- *                    updatedAt:
- *                      type: string
- *                      format: date-time
- *                    seller:
- *                      $ref: '#/definitions/User'
- *                    buyer:
- *                      $ref: '#/definitions/User'
- *                    shipping_address:
- *                      $ref: '#/definitions/Address'
- *        "500":
- *          description: Internal server error
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                      quantity:
+ *                        type: integer
+ *                      sellpost_id:
+ *                        type: integer
+ *      responses:
+ *        "201":
+ *          description: Success message indicating that the order was created successfully
  *          content:
  *            application/json:
  *              schema:
@@ -112,7 +79,40 @@ module.exports = app => {
  *                properties:
  *                  message:
  *                    type: string
- *                    example: "Some error occurred while retrieving orders."
+ *                    example: "Order created successfully"
+ *                  order:
+ *                    type: object
+ *                    properties:
+ *                      order_shipping_state:
+ *                        type: string
+ *                        example: "Pending"
+ *                      order_id:
+ *                        type: integer
+ *                        example: 3
+ *                      buyer_id:
+ *                        type: integer
+ *                        example: 1
+ *                      total_price:
+ *                        type: string
+ *                        example: "31.98"
+ *                      updatedAt:
+ *                        type: string
+ *                        format: date-time
+ *                        example: "2024-03-06T21:05:45.987Z"
+ *                      createdAt:
+ *                        type: string
+ *                        format: date-time
+ *                        example: "2024-03-06T21:05:45.987Z"
+ *        "500":
+ *          description: Error message indicating an internal server error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Internal server error"
  */
 
 
@@ -120,14 +120,14 @@ module.exports = app => {
 
 
 
-    router.post("/", orders.create);
+    router.post("/", orders.createOrder);
   
 /**
  *  @swagger
  *  /api/orders:
  *    get:
  *      summary: Get all orders
- *      description: Retrieve a list of all orders.
+ *      description: Retrieve a list of all orders with details.
  *      tags:
  *        - Order
  *      responses:
@@ -136,38 +136,130 @@ module.exports = app => {
  *          content:
  *            application/json:
  *              schema:
- *                type: array
- *                items:
- *                  type: object
- *                  properties:
- *                    order_id:
- *                      type: integer
- *                    seller_id:
- *                      type: integer
- *                    buyer_id:
- *                      type: integer
- *                    sellpost_id:
- *                      type: integer
- *                    quantity:
- *                      type: integer
- *                    total_price:
- *                      type: string
- *                    order_shipping_state:
- *                      type: string
- *                    shipping_address_id:
- *                      type: integer
- *                    createdAt:
- *                      type: string
- *                      format: date-time
- *                    updatedAt:
- *                      type: string
- *                      format: date-time
- *                    seller:
- *                      $ref: '#/definitions/User'
- *                    buyer:
- *                      $ref: '#/definitions/User'
- *                    shipping_address:
- *                      $ref: '#/definitions/Address'
+ *                type: object
+ *                properties:
+ *                  orders:
+ *                    type: array
+ *                    items:
+ *                      type: object
+ *                      properties:
+ *                        order_id:
+ *                          type: integer
+ *                        buyer_id:
+ *                          type: integer
+ *                        total_price:
+ *                          type: string
+ *                        order_shipping_state:
+ *                          type: string
+ *                        shipping_address_id:
+ *                          type: integer
+ *                        createdAt:
+ *                          type: string
+ *                          format: date-time
+ *                        updatedAt:
+ *                          type: string
+ *                          format: date-time
+ *                        buyer:
+ *                          type: object
+ *                          properties:
+ *                            user_id:
+ *                              type: integer
+ *                            username:
+ *                              type: string
+ *                            email:
+ *                              type: string
+ *                            role_id:
+ *                              type: integer
+ *                            first_name:
+ *                              type: string
+ *                            last_name:
+ *                              type: string
+ *                            gender:
+ *                              type: string
+ *                            date_of_birth:
+ *                              type: string
+ *                              format: date-time
+ *                            profile_pictureUrl:
+ *                              type: string
+ *                            createdAt:
+ *                              type: string
+ *                              format: date-time
+ *                            updatedAt:
+ *                              type: string
+ *                              format: date-time
+ *                        shipping_address:
+ *                          type: object
+ *                          properties:
+ *                            address_id:
+ *                              type: integer
+ *                            user_id:
+ *                              type: integer
+ *                            street_address:
+ *                              type: string
+ *                            city:
+ *                              type: string
+ *                            state:
+ *                              type: string
+ *                            zip_code:
+ *                              type: string
+ *                            country:
+ *                              type: string
+ *                            createdAt:
+ *                              type: string
+ *                              format: date-time
+ *                            updatedAt:
+ *                              type: string
+ *                              format: date-time
+ *                        items:
+ *                          type: array
+ *                          items:
+ *                            type: object
+ *                            properties:
+ *                              id:
+ *                                type: integer
+ *                              order_id:
+ *                                type: integer
+ *                              quantity:
+ *                                type: integer
+ *                              sellpost_id:
+ *                                type: integer
+ *                              createdAt:
+ *                                type: string
+ *                                format: date-time
+ *                              updatedAt:
+ *                                type: string
+ *                                format: date-time
+ *                              sellpost:
+ *                                type: object
+ *                                properties:
+ *                                  sellpost_id:
+ *                                    type: integer
+ *                                  seller_id:
+ *                                    type: integer
+ *                                  item_name:
+ *                                    type: string
+ *                                  description:
+ *                                    type: string
+ *                                  price:
+ *                                    type: string
+ *                                  size:
+ *                                    type: string
+ *                                  gender:
+ *                                    type: string
+ *                                  color:
+ *                                    type: string
+ *                                  brand:
+ *                                    type: string
+ *                                  picUrl:
+ *                                    type: string
+ *                                  condition:
+ *                                    type: string
+ *                                  createdAt:
+ *                                    type: string
+ *                                    format: date-time
+ *                                  updatedAt:
+ *                                    type: string
+ *                                    format: date-time
  *        "500":
  *          description: Internal server error
  *          content:
@@ -177,29 +269,29 @@ module.exports = app => {
  *                properties:
  *                  message:
  *                    type: string
- *                    example: "Some error occurred while retrieving orders."
+ *                    example: "Internal server error."
  */
 
 
 
-    router.get("/", orders.findAll);
+    router.get("/", orders.getAllOrders );
   
     // Retrieve a single Order by id
 
-  /**
+ /**
  *  @swagger
  *  /api/orders/{order_id}:
  *    get:
- *      summary: Get a single order by ID
- *      description: Retrieve a single order by its ID.
+ *      summary: Get order by ID
+ *      description: Retrieve a single order by its ID with detailed information.
  *      tags:
  *        - Order
  *      parameters:
  *        - in: path
  *          name: order_id
- *          required: true
  *          schema:
  *            type: integer
+ *          required: true
  *          description: Numeric ID of the order to retrieve
  *      responses:
  *        "200":
@@ -207,7 +299,138 @@ module.exports = app => {
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/definitions/OrderWithDetails'
+ *                type: object
+ *                properties:
+ *                  order:
+ *                    type: object
+ *                    properties:
+ *                      order_id:
+ *                        type: integer
+ *                      buyer_id:
+ *                        type: integer
+ *                      total_price:
+ *                        type: string
+ *                      order_shipping_state:
+ *                        type: string
+ *                      shipping_address_id:
+ *                        type: integer
+ *                      createdAt:
+ *                        type: string
+ *                        format: date-time
+ *                      updatedAt:
+ *                        type: string
+ *                        format: date-time
+ *                      buyer:
+ *                        type: object
+ *                        properties:
+ *                          user_id:
+ *                            type: integer
+ *                          username:
+ *                            type: string
+ *                          email:
+ *                            type: string
+ *                          role_id:
+ *                            type: integer
+ *                          first_name:
+ *                            type: string
+ *                          last_name:
+ *                            type: string
+ *                          gender:
+ *                            type: string
+ *                          date_of_birth:
+ *                            type: string
+ *                            format: date-time
+ *                          profile_pictureUrl:
+ *                            type: string
+ *                          createdAt:
+ *                            type: string
+ *                            format: date-time
+ *                          updatedAt:
+ *                            type: string
+ *                            format: date-time
+ *                      shipping_address:
+ *                        type: object
+ *                        properties:
+ *                          address_id:
+ *                            type: integer
+ *                          user_id:
+ *                            type: integer
+ *                          street_address:
+ *                            type: string
+ *                          city:
+ *                            type: string
+ *                          state:
+ *                            type: string
+ *                          zip_code:
+ *                            type: string
+ *                          country:
+ *                            type: string
+ *                          createdAt:
+ *                            type: string
+ *                            format: date-time
+ *                          updatedAt:
+ *                            type: string
+ *                            format: date-time
+ *                      items:
+ *                        type: array
+ *                        items:
+ *                          type: object
+ *                          properties:
+ *                            id:
+ *                              type: integer
+ *                            order_id:
+ *                              type: integer
+ *                            quantity:
+ *                              type: integer
+ *                            sellpost_id:
+ *                              type: integer
+ *                            createdAt:
+ *                              type: string
+ *                              format: date-time
+ *                            updatedAt:
+ *                              type: string
+ *                              format: date-time
+ *                            sellpost:
+ *                              type: object
+ *                              properties:
+ *                                sellpost_id:
+ *                                  type: integer
+ *                                seller_id:
+ *                                  type: integer
+ *                                item_name:
+ *                                  type: string
+ *                                description:
+ *                                  type: string
+ *                                price:
+ *                                  type: string
+ *                                size:
+ *                                  type: string
+ *                                gender:
+ *                                  type: string
+ *                                color:
+ *                                  type: string
+ *                                brand:
+ *                                  type: string
+ *                                picUrl:
+ *                                  type: string
+ *                                condition:
+ *                                  type: string
+ *                                createdAt:
+ *                                  type: string
+ *                                  format: date-time
+ *                                updatedAt:
+ *                                  type: string
+ *                                  format: date-time
+ *        "404":
+ *          description: Order not found
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Order not found"
  *        "500":
  *          description: Internal server error
  *          content:
@@ -217,83 +440,10 @@ module.exports = app => {
  *                properties:
  *                  message:
  *                    type: string
- *                    example: "Error retrieving Order with id=1"
- */
-
-/**
- *  @swagger
- *  definitions:
- *    OrderWithDetails:
- *      type: object
- *      properties:
- *        order_id:
- *          type: integer
- *        seller:
- *          $ref: '#/definitions/User'
- *        buyer:
- *          $ref: '#/definitions/User'
- *        shipping_address:
- *          $ref: '#/definitions/Address'
- *        createdAt:
- *          type: string
- *          format: date-time
- *        updatedAt:
- *          type: string
- *          format: date-time
- *    User:
- *      type: object
- *      properties:
- *        user_id:
- *          type: integer
- *        username:
- *          type: string
- *        email:
- *          type: string
- *        role_id:
- *          type: integer
- *        first_name:
- *          type: string
- *        last_name:
- *          type: string
- *        gender:
- *          type: string
- *        date_of_birth:
- *          type: string
- *          format: date-time
- *        profile_pictureUrl:
- *          type: string
- *        createdAt:
- *          type: string
- *          format: date-time
- *        updatedAt:
- *          type: string
- *          format: date-time
- *    Address:
- *      type: object
- *      properties:
- *        address_id:
- *          type: integer
- *        user_id:
- *          type: integer
- *        street_address:
- *          type: string
- *        city:
- *          type: string
- *        state:
- *          type: string
- *        zip_code:
- *          type: string
- *        country:
- *          type: string
- *        createdAt:
- *          type: string
- *          format: date-time
- *        updatedAt:
- *          type: string
- *          format: date-time
+ *                    example: "Internal server error"
  */
   
-    router.get("/:orderId", orders.findOne);
+    router.get("/:orderId", orders.getOrder);
   
     // Update a Order by id
 /**
@@ -377,7 +527,7 @@ module.exports = app => {
  */
 
 
-    router.put("/:orderId", orders.update);
+    router.put("/:orderId", orders.updateOrder);
   
     // Delete a Order by id
    // router.delete("/:orderId", orders.delete);
