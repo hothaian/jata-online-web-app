@@ -10,6 +10,7 @@ Briefly describe your project, including its purpose and key features.
 - **Database Management:** MySQL database with Sequelize for migrations and data handling.
 - **Web Service:** Eight RESTful APIs provided by the backend for various functionalities and data operations.
 - **Firebase Integration:**
+
   - **Authentication:** Utilizes Firebase for user authentication, ensuring secure access to the application.
   - **Firebase Storage:** Leverages Firebase Storage for efficient storage and retrieval of user-generated content.
 
@@ -40,6 +41,7 @@ Before you begin, ensure you have the following installed:
 2. **MySQL Workbench:** Install MySQL Workbench from [dev.mysql.com](https://dev.mysql.com/downloads/workbench/).
 
 3. **Local Database:**
+
    - Open MySQL Workbench and connect to your local MySQL server.
    - Create a new database named "jatadata" using the following SQL command:
      ```sql
@@ -50,28 +52,26 @@ Before you begin, ensure you have the following installed:
 
 4. **Backend Configuration:**
    - Update file `config.json` and `db.config.js` in folder `config` with your MySQL database credentials.
-     ` 
-     DB_HOST=localhost
-     DB_USER=your_username
-     DB_PASSWORD=your_password
-     DB_DATABASE=jatadata
-     `
-    Replace `your_username` and `your_password` with your MySQL server credentials.
- - Navigate to the `backend` folder  and install dependencies
- 
-      ```
-     cd backend
-     npm install
-     ```
-5. **Frontend and Backend Dependencies:**
- - Open second Terminal, Navigate to the `frontend` folder  and install dependencies
- 
-      ```
-     cd frontend
-     npm install
-     ```
-Now your project is set up with the necessary prerequisites. 
+     ` DB_HOST=localhost
+ DB_USER=your_username
+ DB_PASSWORD=your_password
+ DB_DATABASE=jatadata`
+     Replace `your_username` and `your_password` with your MySQL server credentials.
 
+- Navigate to the `backend` folder and install dependencies
+
+  ```
+  cd backend
+  npm install
+  ```
+
+5. **Frontend and Backend Dependencies:**
+
+- Open second Terminal, Navigate to the `frontend` folder and install dependencies
+  `     cd frontend
+     npm install
+    `
+  Now your project is set up with the necessary prerequisites.
 
 ## Getting Started
 
@@ -80,6 +80,7 @@ Follow the steps below to set up and run your project locally.
 ### Backend
 
 1. **Sync Local MySQL Database:**
+
    - Make sure your local MySQL server is running.
    - Navigate to the `backend` folder.
    - Run the following command to synchronize your local MySQL database:
@@ -99,6 +100,7 @@ Follow the steps below to set up and run your project locally.
 ### Frontend
 
 1. **Start Frontend Development Server:**
+
    - Navigate to the `frontend` folder.
    - Start the development server:
      ```bash
@@ -109,10 +111,8 @@ Follow the steps below to set up and run your project locally.
    - Open your web browser and visit [http://localhost:3000](http://localhost:3000).
    - You should see your React app running locally.
 
-Now your project's backend is synchronized with the local MySQL database, and the frontend is accessible at [http://localhost:3000](http://localhost:3000). 
+Now your project's backend is synchronized with the local MySQL database, and the frontend is accessible at [http://localhost:3000](http://localhost:3000).
 backend is accessible at [http://localhost:8080](http://localhost:8080).
-
-
 
 ## Folder Structure
 
@@ -141,3 +141,4 @@ project-root/
     │   ├── index.js
     └── index.css
     ├── package.json
+```

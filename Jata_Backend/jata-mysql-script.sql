@@ -26,12 +26,12 @@ VALUES
 (9, '606 Cherry St', 'Dallas', 'TX', '75201', 'USA', NOW(), NOW()),
 (10, '707 Spruce Ave', 'San Francisco', 'CA', '94101', 'USA', NOW(), NOW());
 
---- Sample data for 'category' table (only fashion category)
-INSERT INTO `category` (`category_name`, `createdAt`, `updatedAt`) 
+-- Sample data for 'category' table (only fashion category)
+INSERT INTO `category` (`category_id`, `category_name`, `createdAt`, `updatedAt`) 
 VALUES
-('Clothing', NOW(), NOW()),
-('Shoes', NOW(), NOW()),
-('Accessories', NOW(), NOW());
+(1, 'Clothing', NOW(), NOW()),
+(2, 'Shoes', NOW(), NOW()),
+(3, 'Accessories', NOW(), NOW());
 
 -- Sample data for 'sellpost' table (only fashion sellposts)
 INSERT INTO `sellpost` (`seller_id`, `item_name`, `description`, `price`, `quantity`, `size`, `gender`, `color`, `brand`, `condition`, `createdAt`, `updatedAt`,`picUrl`) 
@@ -40,7 +40,7 @@ VALUES
 (2, 'Sneakers', 'Running shoes', 59.99, 50, '10', 'Male', 'White', 'Adidas', 'New', NOW(), NOW(),'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i99RDk1ZU0CA/v2/-1x-1.jpg'),
 (3, 'Handbag', 'Leather handbag', 89.50, 30, NULL, NULL, 'Brown', 'Gucci', 'New', NOW(), NOW(),'https://media.gucci.com/style/DarkGray_Center_0_0_980x980/1677774652/672206_10ODT_2579_010_065_0000_Light-Gucci-Bamboo-1947-medium-top-handle-bag.jpg'),
 (4, 'Dress', 'Evening dress', 129.99, 20, 'S', 'Female', 'Black', 'Calvin Klein', 'New', NOW(), NOW(),'https://calvinklein.scene7.com/is/image/CalvinKlein/18488060_001_main?wid=1500&hei=1976&qlt=80%2C0&resMode=sharp2&op_usm=0.9%2C1.0%2C8%2C0&iccEmbed=0&fmt=webp'),
-(5, 'Jeans', 'Slim-fit jeans', 49.99, 40, '32', 'Male', 'Denim', 'Levi\'s', 'New', NOW(), NOW(),'https://lsco.scene7.com/is/image/lsco/015504886-front-pdp?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=880&hei=968'),
+(5, 'Jeans', 'Slim-fit jeans', 49.99, 40, '32', 'Male', 'Denim', "Levi's", 'New', NOW(), NOW(),'https://lsco.scene7.com/is/image/lsco/015504886-front-pdp?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=880&hei=968'),
 (6, 'Earrings', 'Gold hoop earrings', 29.99, 100, NULL, NULL, 'Gold', 'Tiffany & Co.', 'New', NOW(), NOW(),'https://media.tiffany.com/is/image/Tiffany/EcomItemL2/tiffany-hardwearextra-large-link-earrings-38087983_987052_ED.jpg'),
 (7, 'Hat', 'Straw hat', 19.99, 80, NULL, NULL, 'Beige', 'Ralph Lauren', 'New', NOW(), NOW(), 'https://dimg.dillards.com/is/image/DillardsZoom/zoom/polo-ralph-lauren-big--tall-chino-bucket-hat/00000000_zi_63408770-29a7-4897-8edd-28ec9aebeba1.jpg'),
 (8, 'Sunglasses', 'Polarized sunglasses', 79.99, 60, NULL, NULL, 'Black', 'Ray-Ban', 'New', NOW(), NOW(),'https://images2.ray-ban.com//cdn-record-files-pi/785cd2a8-5933-4d14-b145-a35800039b33/f150fe44-f372-4f0e-add9-b01300c1c1b9/0RB2140__901__P21__shad__qt.png?impolicy=RB_Product_clone&width=1024&bgc=%23f2f2f2'),

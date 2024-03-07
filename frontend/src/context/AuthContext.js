@@ -7,11 +7,9 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const AuthContext = React.createContext();
 
- 
 export const useAuth = () => useContext(AuthContext);
 
 // AuthProvider component to manage authentication state
-
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -26,11 +24,12 @@ export function AuthProvider({ children }) {
 
   async function initializeUser(user) {
     if (user) {
-
       try {
-        const response = await fetch('http://localhost:8080/api/user/email/'+user.email); 
+        const response = await fetch(
+          "http://localhost:8080/api/user/email/" + user.email
+        );
         if (!response.ok) {
-          throw new Error('Failed to get the user via email: ' + user.email);
+          throw new Error("Failed to get the user via email: " + user.email);
         }
         const data = await response.json();
         user.user_id = data.user_id;
@@ -38,7 +37,7 @@ export function AuthProvider({ children }) {
         console.log("Found the match email of the user");
       } catch (error) {
         console.log("Can not Find the match email of the user");
-        console.error('Error fetching the user via email:', error);
+        console.error("Error fetching the user via email:", error);
       }
 
       setCurrentUser({ ...user });
@@ -64,7 +63,7 @@ export function AuthProvider({ children }) {
     isEmailUser,
     currentUser,
     setCurrentUser,
-    loading
+    loading,
   };
 
   return (
