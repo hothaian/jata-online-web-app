@@ -65,7 +65,7 @@ const SignUp = () => {
     const { name, email, password } = formData;
 
     try {
-      const user = await doCreateUserWithEmailAndPassword(email, password);
+      
       
       const apiResponse = await fetch('http://localhost:8080/api/user', {
         method: 'POST',
@@ -75,6 +75,8 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
 
+      const user = await doCreateUserWithEmailAndPassword(email, password);
+      
       if (apiResponse.ok) {
         console.log('User registered successfully!');
         setCurrentUser({ uid: user.uid, displayName: name, email });

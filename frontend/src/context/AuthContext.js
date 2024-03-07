@@ -29,6 +29,7 @@ export function AuthProvider({ children }) {
     if (user) {
 
       try {
+        
         const response = await fetch('http://localhost:8080/api/user/email/'+user.email); 
         if (!response.ok) {
           throw new Error('Failed to get the user via email  ' + user.email);
