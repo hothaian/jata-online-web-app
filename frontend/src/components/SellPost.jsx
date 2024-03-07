@@ -7,7 +7,9 @@ export const SellPost = ({ sellpost }) => {
   const { addItemToCart } = useCart();
 
   const handleBuyButton = () => {
-    addItemToCart(sellpost);
+    const itemWithQuantity = { ...sellpost, quantity: selectedQuantity };
+  addItemToCart(itemWithQuantity);
+    // addItemToCart(sellpost);
   };
 
   const handleQuantityChange = (num) => {

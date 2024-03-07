@@ -62,9 +62,12 @@ export default function CheckOut() {
     const order = await res.json();
     if (order.status === "COMPLETED") {
       alert("Payment Successful");
+      console.log(cart);
       clearCart();
+      console.log("completed");
     } else {
       alert("Payment Failed");
+      console.log("failed");
     }
   };
 

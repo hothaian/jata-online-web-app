@@ -38,7 +38,7 @@ export const ShoppingCart = () => {
   return (
     <div>
       <h2>Your Shopping Cart</h2>
-      <div className="alert alert-dismissible alert-warning">
+      {/* <div className="alert alert-dismissible alert-warning">
         <button
           type="button"
           className="btn-close"
@@ -46,7 +46,7 @@ export const ShoppingCart = () => {
         ></button>
         <h4 className="alert-heading">Bag</h4>
         <p className="mb-0">Your shopping cart is currently empty.</p>
-      </div>
+      </div> */}
       {items.map((item) => (
         <div style={{ width: "500px" }} key={item.id}>
           <div className="card mb-3">
