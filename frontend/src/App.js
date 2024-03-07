@@ -17,7 +17,7 @@ import {ShoppingCart} from './components/ShoppingCart';
 import Login from './components/LoginWindow';
 import SignUp from './components/SignUp';
 import AddSellPost from './components/AddSellPost';
-import PieChart from './components/Charts/PieChart';
+import OrderCategoryChart from './components/Charts/OrderCategoryChart';
 import BarChart from './components/Charts/BarChart';
 
 //PAGES
@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<ShoppingCart />} />
-          <Route path="/piechart" element={<PieChart />} />
+          <Route path="/order-by-category" element={<OrderCategoryChart />} />
           <Route path="/barchart" element={<BarChart/>} />
           <Route path="/add-sell-post" element={<AddSellPost/>} />
           <Route path="/sellpost/:post_id" element={<SingleSellPost />} />

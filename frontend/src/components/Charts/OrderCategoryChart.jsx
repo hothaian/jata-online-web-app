@@ -3,7 +3,7 @@ import { ResponsivePie } from "@nivo/pie";
 import { Box } from "@mui/material";
 import Header from "../Header";
 
-const PieChart = () => {
+const OrderCategoryChart = () => {
   const [data, setData] = useState([]);
   const [transformedData, setTransformedData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ const PieChart = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/orders/order-by-category"
+          "http://localhost:8080/api/orders/category"
         );
         const result = await response.json();
         console.log("🚀 ~ fetchData ~ result.data:", result.data);
@@ -146,4 +146,4 @@ const PieChart = () => {
     </div>
   );
 };
-export default PieChart;
+export default OrderCategoryChart;
