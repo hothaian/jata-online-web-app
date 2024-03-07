@@ -36,16 +36,22 @@ const SellPostTable = () => {
     const [filteredRows, setFilteredRows] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/sellposts")
+      
+        const apiUrl = `http://localhost:8080/api/user/${currentUser.user_id}`;
+
+        
+        axios.get(apiUrl)
             .then(response => {
-                const initialRows = response.data;
+                const user = response.data;            
+                
+                const initialRows = user.sellPosts;               
                 rowchange(initialRows);
                 setFilteredRows(initialRows);
             })
             .catch(error => {
                 console.error("Error fetching sell posts:", error.message);
             });
-    }, []);
+    }, []);;
 
     const handleFilterSubmit = () => {
         // Apply the filters
@@ -77,7 +83,7 @@ const SellPostTable = () => {
 
             {/* Input box for sellpost_id filter */}
             <TextField
-                label="Filter by Sell Post ID"
+                label="Input Sell Post ID"
                 value={sellpostIdFilter}
                 onChange={(e) => setSellPostIdFilter(e.target.value)}
                 style={{ marginBottom: '10px', marginRight: '10px' }}
@@ -85,7 +91,7 @@ const SellPostTable = () => {
 
             {/* Filter button */}
             <Button variant="contained" color="primary" onClick={handleFilterSubmit} style={{ marginBottom: '10px', marginRight: '10px' }}>
-                Filter
+                Find Sell Post
             </Button>
 
             {/* Show All button */}
