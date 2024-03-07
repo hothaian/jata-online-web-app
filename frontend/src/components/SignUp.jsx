@@ -1,23 +1,37 @@
-
 /**
  * Author: An Ho
  */
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-import { doCreateUserWithEmailAndPassword } from '../firebase/auth';
-import { useAuth } from '../context/AuthContext';
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
+import { useAuth } from "../context/AuthContext";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const SignUp = () => {
-
-
   const navigate = useNavigate();
-  const { currentUser,setCurrentUser, setUserLoggedIn } = useAuth();
+  const { currentUser, setCurrentUser, setUserLoggedIn } = useAuth();
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    first_name: "",
+    last_name: "",
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    username: "",
+    role_id: null,
+
+    gender: "",
+    date_of_birth: null,
+    profile_pictureUrl: "",
+    address: {
+      street_address: "",
+      city: "",
+      state: "",
+      zip_code: "",
+      country: "",
+    },
   });
 
   const [error, setError] = useState(null);
@@ -28,6 +42,22 @@ const SignUp = () => {
       [e.target.id]: e.target.value,
     });
   };
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      date_of_birth: date,
+    });
+  };
+  const handleAddressChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      address: {
+        ...formData.address,
+        [id]: value,
+      },
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,44 +65,52 @@ const SignUp = () => {
     const { name, email, password } = formData;
 
     try {
+      
+      
+      const apiResponse = await fetch('http://localhost:8080/api/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
       const user = await doCreateUserWithEmailAndPassword(email, password);
-
-      // Update context after successful registration
-      setCurrentUser({ uid: user.uid, displayName: name, email });
-      setUserLoggedIn(true);
-      console.log(user)
-
-      // Redirect to the home page after successful registration
-      navigate('/');
-
+      
+      if (apiResponse.ok) {
+        console.log('User registered successfully!');
+        setCurrentUser({ uid: user.uid, displayName: name, email });
+        setUserLoggedIn(true);
+        navigate("/");
+      } else {
+        console.error('Error registering user:', apiResponse.status, apiResponse.statusText);
+        setError('Failed to register user. Please try again.');
+      }
     } catch (error) {
-      // Handle registration error
       console.error('Error registering user:', error.message);
       setError(error.message);
     }
   };
   return (
-    <section className="vh-100 bg-image" style={{ backgroundImage: "url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')" }}>
+    <section
+      className="vh-100 bg-image"
+      style={{
+        backgroundImage:
+          "url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')",
+      }}
+    >
       <div className="mask d-flex align-items-center h-100 gradient-custom-3">
         <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-              <div className="card" style={{ borderRadius: '15px' }}>
+              <div className="card" style={{ borderRadius: "15px" }}>
                 <div className="card-body p-5">
-                  <h2 className="text-uppercase text-center mb-5">Create an account</h2>
+                  <h2 className="text-uppercase text-center mb-5">
+                    Create an account
+                  </h2>
 
                   <form onSubmit={handleSubmit}>
-                    <div className="form-outline mb-4">
-                      <input
-                        type="text"
-                        id="name"
-                        className="form-control form-control-lg"
-                        value={formData.name}
-                        onChange={handleChange}
-                      />
-                      <label className="form-label" htmlFor="name">Your Name</label>
-                    </div>
-
+                    {/* Basic Information Section */}
                     <div className="form-outline mb-4">
                       <input
                         type="email"
@@ -81,9 +119,22 @@ const SignUp = () => {
                         value={formData.email}
                         onChange={handleChange}
                       />
-                      <label className="form-label" htmlFor="email">Your Email</label>
+                      <label className="form-label" htmlFor="email">
+                        Email
+                      </label>
                     </div>
-
+                    <div className="form-outline mb-4">
+                      <input
+                        type="text"
+                        id="username"
+                        className="form-control form-control-lg"
+                        value={formData.username}
+                        onChange={handleChange}
+                      />
+                      <label className="form-label" htmlFor="username">
+                        Username
+                      </label>
+                    </div>
                     <div className="form-outline mb-4">
                       <input
                         type="password"
@@ -92,18 +143,149 @@ const SignUp = () => {
                         value={formData.password}
                         onChange={handleChange}
                       />
-                      <label className="form-label" htmlFor="password">Password</label>
+                      <label className="form-label" htmlFor="password">
+                        Password
+                      </label>
+                    </div>
+                    <div className="form-row mb-4">
+                      <div className="col">
+                        <input
+                          type="text"
+                          id="first_name"
+                          className="form-control form-control-lg"
+                          value={formData.first_name}
+                          onChange={handleChange}
+                        />
+                        <label className="form-label" htmlFor="first_name">
+                          First Name
+                        </label>
+                      </div>
+                      <div className="col">
+                        <input
+                          type="text"
+                          id="last_name"
+                          className="form-control form-control-lg"
+                          value={formData.last_name}
+                          onChange={handleChange}
+                        />
+                        <label className="form-label" htmlFor="last_name">
+                          Last Name
+                        </label>
+                      </div>
+                    </div>
+                    {/* Gender Select */}
+                    <div className="form-outline mb-4">
+                      <select
+                        id="gender"
+                        className="form-control form-control-lg"
+                        value={formData.gender}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <label className="form-label" htmlFor="gender">
+                        Gender
+                      </label>
+                    </div>
+
+                    {/* Date of Birth */}
+                    <div className="form-outline mb-4">
+                      <DatePicker
+                        id="date_of_birth"
+                        selected={formData.date_of_birth}
+                        onChange={handleDateChange}
+                        className="form-control form-control-lg"
+                        dateFormat="yyyy-MM-dd HH:mm:ss"
+                        showTimeInput={false} // Set to true if you want to include time
+                        placeholderText="Select Date of Birth"
+                      />
+                      <label className="form-label" htmlFor="date_of_birth">
+                        Date of Birth
+                      </label>
+                    </div>
+
+                    {/* Address Section */}
+                    <div className="form-outline mb-4">
+                      <input
+                        type="text"
+                        id="street_address"
+                        className="form-control form-control-lg"
+                        value={formData.address.street_address}
+                        onChange={handleAddressChange}
+                      />
+                      <label className="form-label" htmlFor="street_address">
+                        Street Address
+                      </label>
                     </div>
 
                     <div className="form-outline mb-4">
                       <input
-                        type="password"
-                        id="confirmPassword"
+                        type="text"
+                        id="city"
                         className="form-control form-control-lg"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
+                        value={formData.address.city}
+                        onChange={handleAddressChange}
                       />
-                      <label className="form-label" htmlFor="confirmPassword">Repeat your password</label>
+                      <label className="form-label" htmlFor="city">
+                        City
+                      </label>
+                    </div>
+
+                    <div className="form-outline mb-4">
+                      <input
+                        type="text"
+                        id="state"
+                        className="form-control form-control-lg"
+                        value={formData.address.state}
+                        onChange={handleAddressChange}
+                      />
+                      <label className="form-label" htmlFor="state">
+                        State
+                      </label>
+                    </div>
+
+                    <div className="form-outline mb-4">
+                      <input
+                        type="text"
+                        id="zip_code"
+                        className="form-control form-control-lg"
+                        value={formData.address.zip_code}
+                        onChange={handleAddressChange}
+                      />
+                      <label className="form-label" htmlFor="zip_code">
+                        ZIP Code
+                      </label>
+                    </div>
+
+                    <div className="form-outline mb-4">
+                      <input
+                        type="text"
+                        id="country"
+                        className="form-control form-control-lg"
+                        value={formData.address.country}
+                        onChange={handleAddressChange}
+                      />
+                      <label className="form-label" htmlFor="country">
+                        Country
+                      </label>
+                    </div>
+                    <div className="form-outline mb-4">
+                      <select
+                        id="role_id"
+                        className="form-control form-control-lg"
+                        value={formData.role_id}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Role</option>
+                        <option value={1}>Admin</option>
+                        <option value={2}>User</option>
+                      </select>
+                      <label className="form-label" htmlFor="role_id">
+                        Role
+                      </label>
                     </div>
 
                     <div className="form-check d-flex justify-content-center mb-5">
@@ -113,13 +295,24 @@ const SignUp = () => {
                         value=""
                         id="form2Example3cg"
                       />
-                      <label className="form-check-label" htmlFor="form2Example3g">
-                        I agree to all statements in <a href="#!" className="text-body"><u>Terms of service</u></a>
+                      <label
+                        className="form-check-label"
+                        htmlFor="form2Example3g"
+                      >
+                        I agree to all statements in{" "}
+                        <a href="#!" className="text-body">
+                          <u>Terms of service</u>
+                        </a>
                       </label>
                     </div>
 
                     <div className="d-flex justify-content-center">
-                      <button type="submit" className="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                      <button
+                        type="submit"
+                        className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                      >
+                        Register
+                      </button>
                     </div>
 
                     {error && (
@@ -128,8 +321,12 @@ const SignUp = () => {
                       </div>
                     )}
 
-                    <p className="text-center text-muted mt-5 mb-0">Already have an account? 
-                      <Link to="/login" className="text-body"> Log In</Link>
+                    <p className="text-center text-muted mt-5 mb-0">
+                      Already have an account?
+                      <Link to="/login" className="text-body">
+                        {" "}
+                        Log In
+                      </Link>
                     </p>
                   </form>
                 </div>
@@ -143,4 +340,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
