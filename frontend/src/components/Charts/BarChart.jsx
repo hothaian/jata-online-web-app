@@ -17,7 +17,6 @@ const BarChart = () => {
           "http://localhost:8080/api/orders/top-buyer"
         );
         const result = await response.json();
-        console.log("🚀 ~ fetchData ~ result.data:", result.data);
         setData(result.data);
       } catch (err) {
         setError(err.message);
@@ -33,11 +32,9 @@ const BarChart = () => {
     if (data) {
       // Transform the data
       const transformed = data.map((item) => ({
-        buyer_id: item.buyer_id.toString(),
+        buyer_id: item.buyer_username.toString(),
         total_spending: parseFloat(item.total_spending).toFixed(2),
         total_spendingColor: `hsl(191, 70%, 50%)`,
-        order_count: item.order_count,
-        order_countColor: `hsl(299, 70%, 50%)`,
       }));
   
       setTransformedData(transformed);
@@ -75,8 +72,7 @@ const BarChart = () => {
         data={transformedData}
         keys={[
             'total_spending',
-            'order_count',
-
+            
         ]}
         groupMode="grouped"
         indexBy="buyer_id"

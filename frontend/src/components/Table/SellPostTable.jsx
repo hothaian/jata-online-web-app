@@ -2,6 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePag
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import AddSellPost from "../AddSellPost";
 const SellPostTable = () => {
 
     const { currentUser } = useAuth();
@@ -80,24 +81,36 @@ const SellPostTable = () => {
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>SELL POST LIST</h1>
-
-            {/* Input box for sellpost_id filter */}
+            
             <TextField
-                label="Input Sell Post ID"
-                value={sellpostIdFilter}
-                onChange={(e) => setSellPostIdFilter(e.target.value)}
-                style={{ marginBottom: '10px', marginRight: '10px' }}
-            />
+    label="Input Sell Post ID"
+    value={sellpostIdFilter}
+    onChange={(e) => setSellPostIdFilter(e.target.value)}
+    style={{ marginRight: '10px' }}
+/>
 
-            {/* Filter button */}
-            <Button variant="contained" color="primary" onClick={handleFilterSubmit} style={{ marginBottom: '10px', marginRight: '10px' }}>
-                Find Sell Post
-            </Button>
+{/* Filter button */}
+<Button
+    variant="contained"
+    color="primary"
+    onClick={handleFilterSubmit}
+    style={{ marginRight: '10px' }}
+>
+    Find Sell Post
+</Button>
 
-            {/* Show All button */}
-            <Button variant="contained" color="primary" onClick={handleShowAll} style={{ marginBottom: '10px' }}>
-                Show All
-            </Button>
+{/* Show All button */}
+<Button
+    variant="contained"
+    color="primary"
+    onClick={handleShowAll}
+    style={{ marginRight: '10px' }}
+>
+    Show All
+</Button>
+
+{/* Add Sell Post button */}
+<AddSellPost/>
 
             <Paper sx={{ width: '90%', marginLeft: '5%' }}>
                 <TableContainer sx={{ maxHeight: 450 }}>

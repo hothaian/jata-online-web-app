@@ -3,6 +3,7 @@ module.exports = app => {
     
     var router = require("express").Router();
     router.get("/category", orders.findTotalOrderByCategory);
+    router.get("/top-buyer", orders.findTopBuyer);
     // Create a new Order
     // {
     //   "buyer_id": 1,

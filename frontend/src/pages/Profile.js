@@ -24,7 +24,6 @@ const Profile = () => {
     if(!loading && !userLoggedIn){
       navigate('/');
     }
-    console.log("🚀 ~ Profile ~  currentUser:",  currentUser)
   },[userLoggedIn, loading])
 
 
@@ -48,7 +47,6 @@ const Profile = () => {
           </p>
 
 
-          <AddSellPost/>
           <DashBoard/>
         </>
       ) : null}

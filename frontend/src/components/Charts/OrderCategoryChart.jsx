@@ -16,7 +16,6 @@ const OrderCategoryChart = () => {
           "http://localhost:8080/api/orders/category"
         );
         const result = await response.json();
-        console.log("🚀 ~ fetchData ~ result.data:", result.data);
         setData(result.data);
       } catch (err) {
         setError(err.message);
@@ -40,7 +39,6 @@ const OrderCategoryChart = () => {
         
       }));
     
-      console.log("🚀 ~ transformed ~ transformed:", transformed);
 
       setTransformedData( transformed);
     }

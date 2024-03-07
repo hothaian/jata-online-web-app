@@ -185,3 +185,36 @@ exports.findTotalOrderByCategory = (req, res) => {
     });
   });
 };
+
+exports.findTopBuyer= (req, res) => {
+  sequelize.query(
+    `SELECT
+    u.username AS buyer_username,
+    o.buyer_id,
+    SUM(o.total_price) AS total_spending
+    
+  FROM
+    jatadata.order o
+  JOIN
+    jatadata.user u ON o.buyer_id = u.user_id
+  GROUP BY
+    o.buyer_id
+  ORDER BY
+    total_spending DESC
+  LIMIT 5;`,
+    { type: sequelize.QueryTypes.SELECT }
+  )
+  .then(data => {
+    res.status(200).json({      
+      message: 'Orders grouped by category retrieved successfully',
+      data: data
+    });
+  })
+  .catch(err => {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error retrieving orders grouped by category',
+      error: err.message
+    });
+  });
+};
