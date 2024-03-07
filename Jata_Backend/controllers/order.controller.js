@@ -4,6 +4,9 @@ const User = db.User;
 const Address = db.Address;
 const OrderedItem = db.OrderedItem;
 const SellPost = db.SellPost;
+const Category = db.Category;
+
+const sequelize = db.sequelize;
 
 // Create a new order
 exports.createOrder = async (req, res) => {
@@ -155,4 +158,30 @@ exports.deleteOrder = async (req, res) => {
     console.error("Error deleting order:", err);
     res.status(500).send({ message: "Internal server error" });
   }
+};
+
+
+//An Ho - SQL Querry
+exports.findTotalOrderByCategory = (req, res) => {
+  sequelize.query(
+    `SELECT c.category_name, COUNT(o.order_id) AS order_count
+    FROM jatadata.category c
+    JOIN jatadata.sellpostcategory sc ON c.category_id = sc.category_id
+    JOIN jatadata.order o ON sc.sellpost_id = o.sellpost_id
+    GROUP BY c.category_name;`,
+    { type: sequelize.QueryTypes.SELECT }
+  )
+  .then(data => {
+    res.status(200).json({      
+      message: 'Orders grouped by category retrieved successfully',
+      data: data
+    });
+  })
+  .catch(err => {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error retrieving orders grouped by category',
+      error: err.message
+    });
+  });
 };

@@ -2,7 +2,7 @@ module.exports = app => {
     const orders = require("../controllers/order.controller");
     
     var router = require("express").Router();
-  
+    router.get("/category", orders.findTotalOrderByCategory);
     // Create a new Order
     // {
     //   "buyer_id": 1,
@@ -528,6 +528,9 @@ module.exports = app => {
 
 
     router.put("/:orderId", orders.updateOrder);
+
+
+
   
     // Delete a Order by id
    // router.delete("/:orderId", orders.delete);
