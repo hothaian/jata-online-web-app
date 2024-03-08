@@ -28,6 +28,15 @@ exports.createOrder = async (req, res) => {
           quantity: item.quantity,
           sellpost_id: item.sellpost_id,
         });
+
+        // Update SellPost quantity
+        const sellPost = await SellPost.findByPk(item.sellpost_id);
+        if (sellPost) {
+          // Decrease the quantity by the ordered quantity
+          await sellPost.update({ quantity: sellPost.quantity - item.quantity });
+        } else {
+          throw new Error(`SellPost with ID ${item.sellpost_id} not found.`);
+        }
       })
     );
 
