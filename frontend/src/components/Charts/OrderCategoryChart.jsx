@@ -40,12 +40,7 @@ const OrderCategoryChart = () => {
         value: Math.round((item.order_count / totalOrders) * 100),
         color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`, // Generate random color
       }));
-<<<<<<< HEAD:frontend/src/components/Charts/OrderCategoryChart.jsx
     
-=======
-
-      console.log("🚀 ~ transformed ~ transformed:", transformed);
->>>>>>> 79f691170000a4513b3993d73c090e6126b72e62:frontend/src/components/Charts/PieChart.jsx
 
       setTransformedData(transformed);
     }
