@@ -61,6 +61,8 @@ export default function CheckOut() {
 
     const order = await res.json();
     if (order.status === "COMPLETED") {
+      console.log("🚀 ~ onApprove ~ order:", order)
+      
       alert("Payment Successful");
       console.log(cart);
       clearCart();
