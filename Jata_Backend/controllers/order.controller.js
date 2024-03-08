@@ -2,11 +2,47 @@ const fetch = require("node-fetch");
 const db = require("../models/connection");
 const Order = db.Order;
 const Address = db.Address;
-const OrderedItem = db.OrderedItem;
-const SellPost = db.SellPost;
-const Category = db.Category;
+const User = db.User;
+const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
+const base = "https://api-m.sandbox.paypal.com";
 
-const sequelize = db.sequelize;
+async function generateAccessToken() {
+  try {
+    if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
+      throw new Error("Missing API credentials");
+    }
+
+    const auth = Buffer.from(
+      `${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`
+    ).toString("base64");
+
+    const response = await fetch(`${base}/v1/oauth2/token`, {
+      method: "POST",
+      body: "grant_type=client_credentials",
+      headers: {
+        Authorization: `Basic ${auth}`,
+      },
+    });
+
+    const data = await response.json();
+    return data.access_token;
+  } catch (error) {
+    console.error("Failed to generate Access token: ", error);
+  }
+}
+
+async function handleResponse(response) {
+  try {
+    const jsonResponse = await response.json();
+    return {
+      jsonResponse,
+      httpStatusCode: response.status,
+    };
+  } catch (err) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+}
 
 // Create a new order
 exports.create = async (req, res) => {
@@ -207,28 +243,6 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
-
-// Delete an order
-exports.deleteOrder = async (req, res) => {
-  try {
-    const orderId = req.params.id;
-
-    const order = await Order.findByPk(orderId);
-
-    if (!order) {
-      return res.status(404).send({ message: "Order not found" });
-    }
-
-    await order.destroy();
-
-    res.status(200).send({ message: "Order deleted successfully" });
-  } catch (err) {
-    console.error("Error deleting order:", err);
-    res.status(500).send({ message: "Internal server error" });
-  }
-};
-
-
 //An Ho - SQL Querry
 exports.findTotalOrderByCategory = (req, res) => {
   sequelize.query(
