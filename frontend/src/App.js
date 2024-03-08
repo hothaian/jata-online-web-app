@@ -31,7 +31,6 @@ import { useAuth } from './context/AuthContext';
 import { useNavigate } from "react-router-dom";
 
 const App = () => {  
-  const navigate = useNavigate();
 
   const {userLoggedIn, userDoneSignUp} = useAuth();
   
