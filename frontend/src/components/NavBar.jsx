@@ -1,48 +1,57 @@
 /**
  * Author: An Ho, Tin Phu
  */
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {useAuth} from '../context/AuthContext';
-import { doSignOut } from '../firebase/auth';
-  
+import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { doSignOut } from "../firebase/auth";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import { useCart } from "../context/CartContext";
 
 const NavBar = () => {
+  const { currentUser } = useAuth();
+  const { cartItems } = useCart();
+  const [totalItems, setTotalItems] = useState(0);
+  useEffect(() => {
+    // Calculate the total number of items in the cart whenever cartItems change
+    const newTotalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    setTotalItems(newTotalItems);
+  }, [cartItems]);
 
-const {currentUser} = useAuth();    
-
-
-const handleSignOut = async () => {
-    try {
-        await doSignOut(); // Assume your signOut function is provided by useAuth
-    } catch (error) {
-        console.error('Error signing out:', error);
-    }
-    };
-
-
-    
-const UserButton = () => {
+  const UserButton = () => {
     const { userLoggedIn } = useAuth();
-  
-  
+
     return userLoggedIn ? (
-    <>
+      <>
         <li className="nav-item">
-        <Link className="nav-link" to="/profile">Profile</Link>
+          <Link className="nav-link" to="/profile">
+            Profile
+          </Link>
         </li>
         <li className="nav-item">
-        <Link className="nav-link" to="/" onClick={handleSignOut}>Log Out</Link>
+          <Link className="nav-link" to="/" onClick={handleSignOut}>
+            Log Out
+          </Link>
         </li>
-
-
-    </>      
+      </>
     ) : (
       <Link className="nav-link" id="login-button" to="/login">
         Login
       </Link>
     );
   };
+
+
+  
+  const handleSignOut = async () => {
+    try {
+      await doSignOut(); // Assume your signOut function is provided by useAuth
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -87,13 +96,15 @@ const UserButton = () => {
               <Link className="nav-link" to="/about">
                 About
               </Link>
-            </li>            
-            <UserButton />              
-          
-              <li className="navbar-nav ms-auto">
-                <Link className="nav-link" to="/cart">Cart</Link>
-              </li>
-            
+            </li>
+            <UserButton />
+
+            <li className="navbar-nav ms-auto">
+              <Link className="nav-link" to="/cart">
+              <ShoppingBasketIcon />
+              {totalItems > 0 && <span className="badge">({totalItems})</span>}
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

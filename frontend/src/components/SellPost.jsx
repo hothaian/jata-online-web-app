@@ -8,7 +8,7 @@ export const SellPost = ({ sellpost }) => {
 
   const handleBuyButton = () => {
     const itemWithQuantity = { ...sellpost, quantity: selectedQuantity };
-  addItemToCart(itemWithQuantity);
+    addItemToCart(itemWithQuantity);
     // addItemToCart(sellpost);
   };
 
@@ -98,7 +98,7 @@ export const SellPost = ({ sellpost }) => {
               className="btn btn-primary mt-2"
               onClick={handleBuyButton}
             >
-              Buy Now
+              Add To Cart
             </button>
           </div>
         </div>
