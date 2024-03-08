@@ -1,10 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
@@ -17,7 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require("./models/connection.js");
 
-db.sequelize.sync()
+db.sequelize
+  .sync()
   .then(() => {
     console.log("Synced db.");
   })
@@ -50,22 +52,22 @@ const PORT = process.env.PORT || 8080;
 //define swagger JS Doc configuration
 const APIDocOptions = {
   definition: {
-      openapi: '3.0.0',
-      info: {
-          title : 'RESTful Jata API',
-          description: 'An API for Jata',
-          version : '1.0.0',
-          servers: ['http://localhost:' + PORT] 
-      },
+    openapi: "3.0.0",
+    info: {
+      title: "RESTful Jata API",
+      description: "An API for Jata",
+      version: "1.0.0",
+      servers: ["http://localhost:" + PORT],
+    },
   },
-  apis: ['./routes/*.js'], // path to the files containing the API routes.
-}
+  apis: ["./routes/*.js"], // path to the files containing the API routes.
+};
 
 // initialize the Swagger JSDoc
 const APIDocs = swaggerJSdoc(APIDocOptions);
 
 // Serve Swagger documentation
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(APIDocs));
 
 // set port, listen for requests
 app.listen(PORT, () => {

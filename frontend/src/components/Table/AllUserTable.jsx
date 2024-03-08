@@ -7,8 +7,7 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../Header";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 const AllUserTable = () => {
   const navigate = useNavigate();
@@ -21,17 +20,16 @@ const AllUserTable = () => {
   const columns = [
     { field: "id", headerName: "ID" },
     {
-        field: "name",
-        headerName: "Name",
-        flex: 1,
-        cellClassName: "name-column--cell",
-       
-      },
-      {
-        field: "email",
-        headerName: "Email",
-        flex: 1,
-      },
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+    },
 
     {
       field: "gender",
@@ -59,11 +57,11 @@ const AllUserTable = () => {
             }
             borderRadius="4px"
           >
-            {role_id === 1 && <AdminPanelSettingsOutlinedIcon />}    
+            {role_id === 1 && <AdminPanelSettingsOutlinedIcon />}
             {role_id === 2 && <LockOpenOutlinedIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-            {role_id === 1 && 'Admin'}    
-            {role_id === 2 && 'User'}
+              {role_id === 1 && "Admin"}
+              {role_id === 2 && "User"}
             </Typography>
           </Box>
         );
@@ -99,8 +97,6 @@ const AllUserTable = () => {
     },
   ];
 
-
-
   const handleDeleteUser = async (userId) => {
     try {
       // Send a request to delete the user by ID
@@ -118,9 +114,9 @@ const AllUserTable = () => {
 
   const handleEditUser = async (userId) => {
     // Do any processing you need with userId
-    
+
     // Redirect to /edituser with userID as a parameter
-   navigate(`/edit-user/${userId}`);
+    navigate(`/edit-user/${userId}`);
   };
 
   useEffect(() => {
@@ -149,11 +145,10 @@ const AllUserTable = () => {
       email: user.email,
       name: `${user.first_name} ${user.last_name}`,
       gender: user.gender,
-      role_id:user.role_id,
+      role_id: user.role_id,
     }));
   };
 
-  
   return (
     <Box m="20px">
       <Header title="User Board" subtitle="Managing the user and their role" />

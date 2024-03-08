@@ -7,11 +7,9 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const AuthContext = React.createContext();
 
- 
 export const useAuth = () => useContext(AuthContext);
 
 // AuthProvider component to manage authentication state
-
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -27,7 +25,6 @@ export function AuthProvider({ children }) {
 
   async function initializeUser(user) {
     if (user) {
-
       try {
         
         const response = await fetch('http://localhost:8080/api/user/email/'+user.email); 
@@ -66,7 +63,7 @@ export function AuthProvider({ children }) {
     isEmailUser,
     currentUser,
     setCurrentUser,
-    loading
+    loading,
   };
 
   return (
