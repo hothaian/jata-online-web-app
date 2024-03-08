@@ -30,17 +30,24 @@ const OrderCategoryChart = () => {
   useEffect(() => {
     if (data) {
       // Transform the data to percentage
-      const totalOrders = data.reduce((total, item) => total + item.order_count, 0);
+      const totalOrders = data.reduce(
+        (total, item) => total + item.order_count,
+        0
+      );
       const transformed = data.map((item) => ({
         id: item.category_name.toLowerCase(),
         label: item.category_name,
         value: Math.round((item.order_count / totalOrders) * 100),
         color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`, // Generate random color
-        
       }));
+<<<<<<< HEAD:frontend/src/components/Charts/OrderCategoryChart.jsx
     
+=======
 
-      setTransformedData( transformed);
+      console.log("🚀 ~ transformed ~ transformed:", transformed);
+>>>>>>> 79f691170000a4513b3993d73c090e6126b72e62:frontend/src/components/Charts/PieChart.jsx
+
+      setTransformedData(transformed);
     }
   }, [data]); // Re-run whenever 'data' changes
 
@@ -62,17 +69,20 @@ const OrderCategoryChart = () => {
         id: "shoes",
       },
       id: "dots",
-    }
-    ];
+    },
+  ];
 
   return (
     <div>
-      <Box m="20px"  >
-       <Header title="Order By Category" subtitle="Give Order Category among Orders" />
+      <Box m="20px">
+        <Header
+          title="Order By Category"
+          subtitle="Give Order Category among Orders"
+        />
         <Box height="40vh">
           <ResponsivePie
-            data={transformedData} 
-            arcLabel={(item) => `${item.value}%`}          
+            data={transformedData}
+            arcLabel={(item) => `${item.value}%`}
             margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
             innerRadius={0.5}
             padAngle={0.7}
