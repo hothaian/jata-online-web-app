@@ -17,7 +17,7 @@ exports.createOrder = async (req, res) => {
     const order = await Order.create({
       buyer_id: buyer_id,
       total_price: total_price,
-      shipping_address_id: address.id,
+      shipping_address_id: address.address_id,
     });
 
     // Create ordered items
