@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 module.exports = app => {
     const orders = require("../controllers/order.controller");
     
@@ -116,10 +115,6 @@ module.exports = app => {
  *                    type: string
  *                    example: "Internal server error"
  */
-=======
-module.exports = (app) => {
-  const orders = require("../controllers/order.controller");
->>>>>>> 79f691170000a4513b3993d73c090e6126b72e62
 
   var router = require("express").Router();
 
@@ -160,7 +155,6 @@ module.exports = (app) => {
   // Delete all Orders
   router.delete("/", orders.deleteAll);
 
-<<<<<<< HEAD
     router.get("/", orders.getAllOrders );
   
     // Retrieve a single Order by id
@@ -428,7 +422,3 @@ module.exports = (app) => {
     app.use('/api/orders', router);
   };
   
-=======
-  app.use("/api/orders", router);
-};
->>>>>>> 79f691170000a4513b3993d73c090e6126b72e62
