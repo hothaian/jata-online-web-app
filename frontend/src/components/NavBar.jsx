@@ -45,10 +45,12 @@ const NavBar = () => {
   
   const handleSignOut = async () => {
     try {
-      await doSignOut(); // Assume your signOut function is provided by useAuth
+      await doSignOut(); 
+      console.log("🚀 doSignOut:")
     } catch (error) {
       console.error("Error signing out:", error);
     }
+      
   };
 
 

@@ -15,6 +15,8 @@ import {
   linkWithPopup
 } from "firebase/auth";
 
+import { useAuth } from '../context/AuthContext'
+
 export const doCreateUserWithEmailAndPassword = async (email, password) => {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   return userCredential.user; // Returning user object, not the userCredential
@@ -54,13 +56,15 @@ export const doSignInWithEmailAndPassword = async (email, password) => {
   };
 
 export const doSignInWithGoogle = async () => {
+
+  
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
   
       const user = result.user;
-      console.log('Sucess Login! \nUser Email:' + user.email);
-      console.log(user);
+      console.log('Sucess Login with Gmail! \nUser email:' + user.email);
+
   
    
   
@@ -79,10 +83,10 @@ export const doSignInWithGoogle = async () => {
     try {
       // Sign in with GitHub
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log(user.email);
+
   
-      // Add user to Firestore or perform other actions
+      const user = result.user;
+      console.log('Sucess Login with Github! \nUser email:' + user.email);
   
     } catch (error) {
       // Handle the "account-exists-with-different-credential" error

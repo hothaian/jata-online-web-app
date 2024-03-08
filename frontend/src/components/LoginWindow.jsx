@@ -15,7 +15,7 @@ import {FaGithub, FaGoogle } from 'react-icons/fa';
 const Login = () => {
 
     const navigate = useNavigate(); 
-    const { userLoggedIn, currentUSer } = useAuth()
+    const { userLoggedIn, currentUser } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isSigningIn, setIsSigningIn] = useState(false)
@@ -50,31 +50,49 @@ const Login = () => {
         }
     };
     // For Third Party Login User
-    const onSignIn = (e, provider) => {
-        e.preventDefault();
+    const onSignIn = async (e, provider) => {
+      e.preventDefault();
+    
+      try {
         if (!isSigningIn) {
           setIsSigningIn(true);
+    
           switch (provider) {
             case 'google':
-              doSignInWithGoogle().catch(err => {
-                setIsSigningIn(false);
-              });
+              await doSignInWithGoogle();
               break;
             case 'github':
-              doSignInWithGithub().catch(err => {
-                setIsSigningIn(false);
-              });
+              await doSignInWithGithub();
               break;
             default:
+              throw new Error("Invalid provider");
           }
+    
+
         }
-      };
-      
+      } catch (err) {
+        console.error("Error during sign-in:", err);
+      } finally {
+        // Reset the signing in state, regardless of success or failure
+        setIsSigningIn(false);
+         
+
+      }
+    };
 
 
 
       return (
-        <section className="vh-100 gradient-custom">
+        <section
+        className="vh-110 bg-image"
+        style={{
+          backgroundImage:
+            "url('https://hdwallpaperim.com/wp-content/uploads/2017/08/24/115306-minimalism-colorful.jpg')",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
           <div className="container py-5 h-100">
             <div className="row d-flex justify-content-center align-items-center h-100">
               <div className="col-12 col-md-8 col-lg-6 col-xl-5">

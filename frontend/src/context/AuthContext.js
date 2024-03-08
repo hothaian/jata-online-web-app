@@ -5,6 +5,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
+
 const AuthContext = React.createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -13,8 +14,8 @@ export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
-  
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [userDoneSignUp, setUserDoneSignUp] = useState(false)
   const [isEmailUser, setIsEmailUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -33,11 +34,14 @@ export function AuthProvider({ children }) {
         }
         const data = await response.json();
         user.user_id = data.user_id;
-        console.log(data);
         console.log("Found the match email of the user");
+        setUserDoneSignUp(true)
       } catch (error) {
-        console.log("Can not Find the match email of the user in mySQL Database:");
         console.error('Error fetching the user via email:', error);
+        console.log("Can not Find the match email of the user in local mySQL Database:");
+        setUserDoneSignUp(false)
+
+       
       }
 
       setCurrentUser({ ...user });
@@ -64,6 +68,8 @@ export function AuthProvider({ children }) {
     currentUser,
     setCurrentUser,
     loading,
+    userDoneSignUp, 
+    setUserDoneSignUp
   };
 
   return (

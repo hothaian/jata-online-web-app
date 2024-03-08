@@ -1,24 +1,36 @@
 /**
  * Author: An Ho
  */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
 import { useAuth } from "../context/AuthContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const SignUp = () => {
+const SignUpWithAPI = () => {
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser, setUserLoggedIn } = useAuth();
+
+  const [email, setEmail] = useState('');
+  const {userLoggedIn, currentUser, setCurrentUser, setUserLoggedIn } = useAuth();
+ 
+
+  useEffect(() => {
+    // Check if currentUser exists before logging the email
+    if (currentUser && currentUser.email) {
+      console.log('Current user email:', currentUser.email);
+      setFormData({ ...formData, email: currentUser.email });
+    } else {
+      console.log('No current user or email found');
+    }
+  }, []);
+ 
 
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     name: "",
-    email: "",
-    password: "",
-
+    email: email,
     username: "",
     role_id: null,
 
@@ -62,7 +74,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { name, email, password } = formData;
+    
 
     try {
       const apiResponse = await fetch("http://localhost:8080/api/user", {
@@ -73,26 +85,13 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
 
-      const user = await doCreateUserWithEmailAndPassword(email, password);
-
-      if (apiResponse.ok) {
-        console.log("User registered successfully!");
-        setCurrentUser({ uid: user.uid, displayName: name, email });
-        setUserLoggedIn(true);
-        navigate("/");
-      } else {
-        console.error(
-          "Error registering user:",
-          apiResponse.status,
-          apiResponse.statusText
-        );
-        setError("Failed to register user. Please try again.");
-      }
+      navigate("/");
     } catch (error) {
       console.error("Error registering user:", error.message);
       setError(error.message);
     }
   };
+
   return (
     <section
       className="vh-110 bg-image"
@@ -107,24 +106,25 @@ const SignUp = () => {
       <div className="mask d-flex align-items-center h-100 gradient-custom-3">
         <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-12 col-md-9 col-lg-7 col-xl-12">
+            <div className="col-12 col-md-9 col-lg-7 col-xl-10">
               <div className="card" style={{ borderRadius: "15px" }}>
                 <div className="card-body p-5">
                   <h2 className="text-uppercase text-center mb-5">
-                    Create an account
+                    Edit Profile
                   </h2>
 
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} className="row g-3">
                     {/* Basic Information Section */}
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-outline mb-4">
+                        {console.log("formData.email:", formData.email)}
                           <input
                             type="email"
                             id="email"
                             className="form-control form-control-lg"
                             value={formData.email}
-                            onChange={handleChange}
+                            disabled
                           />
                           <label className="form-label" htmlFor="email">
                             Email
@@ -144,20 +144,6 @@ const SignUp = () => {
                             Username
                           </label>
                         </div>
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="password"
-                          className="form-control form-control-lg"
-                          value={formData.password}
-                          onChange={handleChange}
-                        />
-                        <label className="form-label" htmlFor="password">
-                          Password
-                        </label>
                       </div>
                     </div>
 
@@ -221,7 +207,7 @@ const SignUp = () => {
                             selected={formData.date_of_birth}
                             onChange={handleDateChange}
                             className="form-control form-control-lg"
-                            dateFormat="yyyy-MM-dd"
+                            dateFormat="yyyy-MM-dd HH:mm:ss"
                             showTimeInput={false}
                             placeholderText="Select Date of Birth"
                           />
@@ -387,4 +373,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpWithAPI;

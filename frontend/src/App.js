@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useState,useEffect } from 'react';
  
 import './App.css';
 import {
@@ -26,9 +26,22 @@ import { Home } from './pages/Home';
 import Profile from './pages/Profile';
 import { SingleSellPost } from './components/singleSellPost';
 import { CategorySellPost } from './components/CategorySellPost';
-
+import SignUpWithAPI from './components/SignUpWithAPI';
+import { useAuth } from './context/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 const App = () => {  
+  const navigate = useNavigate();
+
+  const {userLoggedIn, userDoneSignUp} = useAuth();
+  
+//  useEffect(() => {
+//     if (userLoggedIn && !userDoneSignUp) {
+//       navigate("/signup-api");
+//     }
+//   }, [userLoggedIn, userDoneSignUp, navigate]);
+
+
   return (
     <Router>
       <div>
@@ -38,6 +51,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup-api" element={<SignUpWithAPI/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<ShoppingCart />} />
           <Route path="/order-by-category" element={<OrderCategoryChart />} />
