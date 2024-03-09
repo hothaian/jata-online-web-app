@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { Box } from "@mui/material";
 import Header from "../Header";
+import { API_ROUTES } from "../../route";
 
 const BarChart = () => {
   const [data, setData] = useState([]);
@@ -13,7 +14,7 @@ const BarChart = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/orders/top-buyer"
+          API_ROUTES.REPORT.TOP_BUYER
         );
         const result = await response.json();
         setData(result.data);

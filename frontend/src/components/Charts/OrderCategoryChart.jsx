@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { Box } from "@mui/material";
 import Header from "../Header";
+import { API_ROUTES } from "../../route";
 
 const OrderCategoryChart = () => {
   const [data, setData] = useState([]);
@@ -10,12 +11,15 @@ const OrderCategoryChart = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("🚀 ~ fetchData ~ result:", API_ROUTES.REPORT.ORDER_BY_CATEGORY)
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/orders/category"
+          API_ROUTES.REPORT.ORDER_BY_CATEGORY
         );
         const result = await response.json();
+        console.log("🚀 ~ fetchData ~ result:", API_ROUTES.REPORT.ORDER_BY_CATEGORY)
+        
         setData(result.data);
       } catch (err) {
         setError(err.message);
