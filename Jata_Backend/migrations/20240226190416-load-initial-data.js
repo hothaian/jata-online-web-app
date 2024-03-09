@@ -160,7 +160,7 @@ module.exports = {
         { category_id: 1, sellpost_id: 4, createdAt: currentDate, updatedAt: currentDate },
         { category_id: 1, sellpost_id: 5, createdAt: currentDate, updatedAt: currentDate },
         { category_id: 3, sellpost_id: 6, createdAt: currentDate, updatedAt: currentDate },
-        { category_id: 2, sellpost_id: 7, createdAt: currentDate, updatedAt: currentDate },
+        { category_id: 3, sellpost_id: 7, createdAt: currentDate, updatedAt: currentDate },
         { category_id: 3, sellpost_id: 8, createdAt: currentDate, updatedAt: currentDate },
         { category_id: 1, sellpost_id: 9, createdAt: currentDate, updatedAt: currentDate },
         { category_id: 1, sellpost_id: 10, createdAt: currentDate, updatedAt: currentDate }
