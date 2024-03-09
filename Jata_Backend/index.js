@@ -44,6 +44,7 @@ require("./routes/address.routes")(app);
 require("./routes/category.routes")(app);
 require("./routes/order.routes")(app);
 require("./routes/comment.routes")(app);
+require("./routes/report.routes")(app);
 
 const swaggerJSdoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
