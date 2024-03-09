@@ -27,12 +27,9 @@ import Profile from './pages/Profile';
 import { SingleSellPost } from './components/singleSellPost';
 import { CategorySellPost } from './components/CategorySellPost';
 import SignUpWithAPI from './components/SignUpWithAPI';
-import { useAuth } from './context/AuthContext';
+import EditProfile from './components/EditProfile';
 
 const App = () => {  
-
-  const {userLoggedIn, userDoneSignUp} = useAuth();
-  
 
 
 
@@ -42,14 +39,18 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
+
+          <Route path="/login" element={<Login />} />          
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signup-api" element={<SignUpWithAPI/>} />
+          
           <Route path="/profile" element={<Profile />} />
-          <Route path="/cart" element={<ShoppingCart />} />
-          <Route path="/order-by-category" element={<OrderCategoryChart />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/barchart" element={<BarChart/>} />
+          <Route path="/order-by-category" element={<OrderCategoryChart />} />
           <Route path="/add-sell-post" element={<AddSellPost/>} />
+
+          <Route path="/cart" element={<ShoppingCart />} />         
           <Route path="/sellpost/:post_id" element={<SingleSellPost />} />
           <Route path="/category/:category_id" element={<CategorySellPost />} />
 
