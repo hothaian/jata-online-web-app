@@ -110,7 +110,7 @@ const SignUpWithAPI = () => {
               <div className="card" style={{ borderRadius: "15px" }}>
                 <div className="card-body p-5">
                   <h2 className="text-uppercase text-center mb-5">
-                    Edit Profile
+                    Sign Up Form 
                   </h2>
 
                   <form onSubmit={handleSubmit} className="row g-3">
@@ -207,12 +207,12 @@ const SignUpWithAPI = () => {
                             selected={formData.date_of_birth}
                             onChange={handleDateChange}
                             className="form-control form-control-lg"
-                            dateFormat="yyyy-MM-dd HH:mm:ss"
+                            dateFormat="yyyy-MM-dd"
                             showTimeInput={false}
-                            placeholderText="Select Date of Birth"
+                            placeholderText="Date of Birth"
                           />
                           <label className="form-label" htmlFor="date_of_birth">
-                            Date of Birth
+                            Select
                           </label>
                         </div>
                       </div>
