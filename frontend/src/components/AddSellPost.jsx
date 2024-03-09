@@ -13,6 +13,9 @@ import {
   TextField,
   MenuItem,
 } from "@mui/material";
+
+
+import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from "@mui/icons-material/Close";
 import ImageUploader from "./ImageHandle/ImageUploader";
 import { useAuth } from "../context/AuthContext";
@@ -126,7 +129,7 @@ const AddSellPost = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Button onClick={handleOpenPopup} color="primary" variant="contained">
+      <Button endIcon={<AddIcon/>} onClick={handleOpenPopup} variant="contained" color="success">
         Add Sell Post
       </Button>
       <Dialog open={open} onClose={handleClosePopup} fullWidth maxWidth="sm">

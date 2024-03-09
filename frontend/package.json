@@ -28,6 +28,7 @@
     "react-apexcharts": "^1.4.0",
     "react-chartjs-2": "^5.2.0",
     "react-circular-progressbar": "^2.0.4",
+    "react-confirm-alert": "^3.0.6",
     "react-datepicker": "^6.2.0",
     "react-dom": "^18.2.0",
     "react-google-places-autocomplete": "^4.0.1",

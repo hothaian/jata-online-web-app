@@ -9,11 +9,18 @@ import {
   TableRow,
   TextField,
   Button,
+  
 } from "@mui/material";
+
+import SearchIcon from '@mui/icons-material/Search';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import AddSellPost from "../AddSellPost";
+import { MDBCol, MDBContainer, MDBRow, MDBCard } from "mdb-react-ui-kit";
+
 const SellPostTable = () => {
   const { currentUser } = useAuth();
 
@@ -46,23 +53,22 @@ const SellPostTable = () => {
   const [sellpostIdFilter, setSellPostIdFilter] = useState("");
   const [filteredRows, setFilteredRows] = useState([]);
 
-    useEffect(() => {
-      
-        const apiUrl = `http://localhost:8080/api/user/${currentUser.user_id}`;
+  useEffect(() => {
+    const apiUrl = `http://localhost:8080/api/user/${currentUser.user_id}`;
 
-        
-        axios.get(apiUrl)
-            .then(response => {
-                const user = response.data;            
-                
-                const initialRows = user.sellPosts;               
-                rowchange(initialRows);
-                setFilteredRows(initialRows);
-            })
-            .catch(error => {
-                console.error("Error fetching sell posts:", error.message);
-            });
-    }, []);;
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        const user = response.data;
+
+        const initialRows = user.sellPosts;
+        rowchange(initialRows);
+        setFilteredRows(initialRows);
+      })
+      .catch((error) => {
+        console.error("Error fetching sell posts:", error.message);
+      });
+  }, []);
 
   const handleFilterSubmit = () => {
     // Apply the filters
@@ -90,39 +96,47 @@ const SellPostTable = () => {
     pagechange(0);
   };
 
-    return (
-        <div style={{ textAlign: 'center' }}>
-            <h1>SELL POST LIST</h1>
-            
+  return (
+    <div style={{ textAlign: "center" }}>
+      <MDBContainer>
+        <h1>SELL POST LIST</h1>
+        <MDBRow className="mb-4" >
+          <MDBCol lg="5">
             <TextField
-    label="Input Sell Post ID"
-    value={sellpostIdFilter}
-    onChange={(e) => setSellPostIdFilter(e.target.value)}
-    style={{ marginRight: '10px' }}
-/>
-
-{/* Filter button */}
-<Button
-    variant="contained"
-    color="primary"
-    onClick={handleFilterSubmit}
-    style={{ marginRight: '10px' }}
->
-    Find Sell Post
-</Button>
-
-{/* Show All button */}
-<Button
-    variant="contained"
-    color="primary"
-    onClick={handleShowAll}
-    style={{ marginRight: '10px' }}
->
-    Show All
-</Button>
-
-{/* Add Sell Post button */}
-<AddSellPost/>
+              label="Input Sell Post ID"
+              value={sellpostIdFilter}
+              onChange={(e) => setSellPostIdFilter(e.target.value)}
+              style={{ marginRight: "10px" }}
+            />
+          </MDBCol>
+          <MDBCol lg="2">
+            <Button
+             endIcon={<SearchIcon />}
+              variant="contained"
+              color="primary"
+              onClick={handleFilterSubmit}
+              style={{ marginRight: "10px" }}
+            >
+              Find Sell Post
+            </Button>
+          </MDBCol>
+          <MDBCol lg="2" className="ml-auto">
+            <Button
+              endIcon={<DoneAllIcon/>}
+              variant="contained"
+              color="primary"
+              onClick={handleShowAll}
+              style={{ marginRight: "10px" }}
+            >
+              Show All
+            </Button>
+          </MDBCol>
+          <MDBCol lg="2">
+            
+            <AddSellPost />
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
 
       <Paper sx={{ width: "90%", marginLeft: "5%" }}>
         <TableContainer sx={{ maxHeight: 450 }}>

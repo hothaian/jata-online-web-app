@@ -15,7 +15,8 @@ import 'bootswatch/dist/lux/bootstrap.min.css';
 import NavBar from './components/NavBar';
 import {ShoppingCart} from './components/ShoppingCart';
 import Login from './components/LoginWindow';
-import SignUp from './components/SignUp';
+import SignUp from './components/SignUp/SignUp';
+import SignUpWithAPI from './components/SignUp/SignUpWithAPI';
 import AddSellPost from './components/AddSellPost';
 import OrderCategoryChart from './components/Charts/OrderCategoryChart';
 import BarChart from './components/Charts/BarChart';
@@ -26,7 +27,7 @@ import { Home } from './pages/Home';
 import Profile from './pages/Profile';
 import { SingleSellPost } from './components/singleSellPost';
 import { CategorySellPost } from './components/CategorySellPost';
-import SignUpWithAPI from './components/SignUpWithAPI';
+
 import EditProfile from './components/EditProfile';
 
 const App = () => {  

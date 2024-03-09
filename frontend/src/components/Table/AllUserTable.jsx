@@ -3,7 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../Charts/theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../Header";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -13,6 +12,7 @@ const AllUserTable = () => {
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState([]);
+
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const theme = useTheme();
@@ -81,26 +81,26 @@ const AllUserTable = () => {
     //     </Button>
     //   ),
     // },
-    {
-      field: "Edit",
-      headerName: "Edit",
-      flex: 1,
-      renderCell: ({ id }) => (
-        <Button
-          variant="contained"
-          color="error"
-          onClick={() => handleEditUser(id)}
-        >
-          Edit
-        </Button>
-      ),
-    },
+    // {
+    //   field: "Edit",
+    //   headerName: "Edit",
+    //   flex: 1,
+    //   renderCell: ({ id }) => (
+    //     <Button
+    //       variant="contained"
+    //       color="error"
+    //       onClick={() => handleEditUser(id)}
+    //     >
+    //       Edit
+    //     </Button>
+    //   ),
+    // },
   ];
 
   const handleDeleteUser = async (userId) => {
     try {
       // Send a request to delete the user by ID
-      await axios.delete(`http://localhost:8080/user/${userId}`);
+      await axios.delete(`http://localhost:8080/api/user/${userId}`);
 
       // Update the user data by fetching the latest data
       const response = await axios.get("http://localhost:8080/user");
@@ -151,7 +151,7 @@ const AllUserTable = () => {
 
   return (
     <Box m="20px">
-      <Header title="User Board" subtitle="Managing the user and their role" />
+      <Header title="User Management Board" subtitle="Managing the user and their role" />
       <Box
         m="40px 0 0 0"
         height="75vh"

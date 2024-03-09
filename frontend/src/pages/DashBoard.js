@@ -1,48 +1,42 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
-import OrderCategoryChart from '../components/Charts/OrderCategoryChart';
-import BarChart from '../components/Charts/BarChart';
-import AllUserTable from '../components/Table/AllUserTable';
-import SellPostTable from '../components/Table/SellPostTable';
+import React from "react";
+import Grid from "@mui/material/Grid";
+import OrderCategoryChart from "../components/Charts/OrderCategoryChart";
+import BarChart from "../components/Charts/BarChart";
+import AllUserTable from "../components/Table/AllUserTable";
+import SellPostTable from "../components/Table/SellPostTable";
+import {
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBCard,
+} from "mdb-react-ui-kit";
 
 const DashBoard = () => {
   return (
-    <div>
-      {/* Centering the h3 horizontally */}
-      <Grid container justifyContent="center">
-        <Grid item>
-          <h1> Sell Reports</h1>
-        </Grid>
-      </Grid>
-
-      {/* Using MUI Grid for layout */}
-      <Grid container spacing={3}>
-        {/* First column - Order Category Chart */}
-        <Grid item xs={12} sm={6}>
-          <OrderCategoryChart />
-        </Grid>
-        
-        {/* Second column - Bar Chart */}
-        <Grid item xs={12} sm={6}>
-          <BarChart />
-        </Grid>
-      </Grid>
-
-      {/* Full-width layout for Sell Post Table */}
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
+    <section style={{ backgroundColor: "#eee" }}>
+      <MDBContainer>
+        <h1 className="text-center"> Sell Reports</h1>
+        <MDBRow>
+          <MDBCol lg="6">
+            <MDBCard className="mb-4">
+              <BarChart />
+            </MDBCard>
+          </MDBCol>
+          <MDBCol lg="6">
+            <MDBCard className="mb-4">
+              <OrderCategoryChart />
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
           <SellPostTable />
-        </Grid>
-      </Grid>
-
-      {/* Full-width layout for All User Table */}
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
+        </MDBRow>
+        <MDBRow>
           <AllUserTable />
-        </Grid>
-      </Grid>
-    </div>
+        </MDBRow>
+      </MDBContainer>
+    </section>
   );
-}
+};
 
 export default DashBoard;
