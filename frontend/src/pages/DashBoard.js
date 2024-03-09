@@ -5,7 +5,7 @@ import BarChart from '../components/Charts/BarChart';
 import AllUserTable from '../components/Table/AllUserTable';
 import SellPostTable from '../components/Table/SellPostTable';
 
-function DashBoard() {
+const DashBoard = () => {
   return (
     <div>
       {/* Centering the h3 horizontally */}
