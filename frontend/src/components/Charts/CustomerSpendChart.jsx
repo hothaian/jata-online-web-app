@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Header from "../Header";
 import { API_ROUTES } from "../../route";
 
-const BarChart = () => {
+const CustomerSpendChart = () => {
   const [data, setData] = useState([]);
   const [transformedData, setTransformedData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -182,4 +182,4 @@ const BarChart = () => {
     </div>
   );
 };
-export default BarChart;
+export default CustomerSpendChart;

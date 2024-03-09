@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import OrderCategoryChart from "../components/Charts/OrderCategoryChart";
-import BarChart from "../components/Charts/BarChart";
+import CustomerSpendChart from "../components/Charts/CustomerSpendChart";
 import AllUserTable from "../components/Table/AllUserTable";
 import SellPostTable from "../components/Table/SellPostTable";
 import {
@@ -19,7 +19,7 @@ const DashBoard = () => {
         <MDBRow>
           <MDBCol lg="6">
             <MDBCard className="mb-4">
-              <BarChart />
+              <CustomerSpendChart />
             </MDBCard>
           </MDBCol>
           <MDBCol lg="6">

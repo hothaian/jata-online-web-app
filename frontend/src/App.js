@@ -19,7 +19,7 @@ import SignUp from './components/SignUp/SignUp';
 import SignUpWithAPI from './components/SignUp/SignUpWithAPI';
 import AddSellPost from './components/AddSellPost';
 import OrderCategoryChart from './components/Charts/OrderCategoryChart';
-import BarChart from './components/Charts/BarChart';
+import CustomerSpendChart from './components/Charts/CustomerSpendChart';
 
 //PAGES
 import { About } from './pages/About';
@@ -47,7 +47,7 @@ const App = () => {
           
           <Route path="/profile" element={<Profile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/barchart" element={<BarChart/>} />
+          <Route path="/customer-spend-chart" element={<CustomerSpendChart/>} />
           <Route path="/order-by-category" element={<OrderCategoryChart />} />
           <Route path="/add-sell-post" element={<AddSellPost/>} />
 
