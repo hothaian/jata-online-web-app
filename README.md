@@ -2,7 +2,24 @@
 
 ## Description
 
-Briefly describe your project, including its purpose and key features.
+Welcome to JATA Online Market! Our collaborative team for class TCSS 460 at University of Tacoma brings you a React app with a user-friendly interface. With organized frontend and backend structures, we using MySQL, Firebase  for robust data operations through  RESTful APIs.
+
+
+[<img src="./logo.png" width="300" height="300" />](./logo.png )
+
+
+
+
+
+#### Meet the team:
+
+1. **An Ho** https://github.com/hothaian
+
+2. **Angel Vu** https://github.com/angel-vu
+
+3. **Tin  Phu** https://github.com/phuhuutin
+
+
 
 ## Features
 
@@ -24,23 +41,21 @@ Briefly describe your project, including its purpose and key features.
 
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
-  - [Frontend](#frontend)
   - [Backend](#backend)
-- [Usage](#usage)
+  - [Frontend](#frontend) 
 - [Folder Structure](#folder-structure)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-1. **Node.js:** Install Node.js from [nodejs.org](https://nodejs.org/).
+1. **Node.js:** 
+   - Install Node.js from [nodejs.org](https://nodejs.org/).
 
-2. **MySQL Workbench:** Install MySQL Workbench from [dev.mysql.com](https://dev.mysql.com/downloads/workbench/).
+2. **MySQL Workbench:** 
+   - Install MySQL Workbench from [dev.mysql.com](https://dev.mysql.com/downloads/workbench/).
 
-3. **Local Database:**
+3. **MySQL Local Database:**
 
    - Open MySQL Workbench and connect to your local MySQL server.
    - Create a new database named "jatadata" using the following SQL command:
@@ -48,40 +63,49 @@ Before you begin, ensure you have the following installed:
      CREATE DATABASE jatadata;
      ```
 
-   Note: Ensure that your MySQL server is running before attempting to create the database.
+     Note: Ensure that your MySQL server is running before attempting to create the database.
 
 4. **Backend Configuration:**
-   - Update file `config.json` and `db.config.js` in folder `config` with your MySQL database credentials.
-     ` DB_HOST=localhost
- DB_USER=your_username
- DB_PASSWORD=your_password
- DB_DATABASE=jatadata`
-     Replace `your_username` and `your_password` with your MySQL server credentials.
+    - Update file `config.json` and `db.config.js` in folder `config` with your MySQL database credentials:
 
-- Navigate to the `backend` folder and install dependencies
+      ``` DB_HOST=localhost
+          DB_USER=your_username
+          DB_PASSWORD=your_password
+          DB_DATABASE=jatadata
+      ```
+      Replace `your_username` and `your_password` with your MySQL server credentials.
 
-  ```
-  cd backend
-  npm install
-  npm start
-  ```
+    - Navigate to the `backend` folder and install dependencies
 
-- Once the database is synced, terminate the process (`Ctrl + C`).
-- Run the following command to apply Sequelize migrations and load data into the tables:
-  ```
-  npx sequelize db:migrate
-  ```
+      ```
+      cd backend
+      npm install
+      npm start
+      ```
 
-- 
+    - Once the database is synced, terminate the process (`Ctrl + C`).
+    - Run the following command to apply Sequelize migrations and load data into the tables:
+
+      ```
+      npx sequelize db:migrate
+      ```
 
 
 5. **Frontend and Backend Dependencies:**
 
-- Open second Terminal, Navigate to the `frontend` folder and install dependencies
-  `     cd frontend
-     npm install
-    `
-  Now your project is set up with the necessary prerequisites.
+    - Open second Terminal, Navigate to the `frontend` folder and install dependencies
+      ```    
+      cd frontend
+      npm install
+      ```
+
+5. **Third Party API Key Config**
+
+    - Modify your API key:
+        - Firebase:  `frontend/src/APIconfig.js`
+        - PayPal:  `Jata_Backend/.env`
+     
+Now your project is set up with the necessary prerequisites.
 
 ## Getting Started
 
@@ -100,7 +124,6 @@ Follow the steps below to set up and run your project locally.
    - This will establish a connection to your local MySQL server and sync the database.
 
 2. **Run Sequelize Migrations:**
-
 
 ### Frontend
 
@@ -133,6 +156,7 @@ project-root/
 │   ├── models/
 │   ├── routes/
 │   ├── index.js
+│   ├── .env                #Fill in your Paypal API Key
 │
 └── frontend/
     ├── public/
@@ -144,6 +168,9 @@ project-root/
     │   ├── App.js
     │   ├── App.css
     │   ├── index.js
+    |   |──route.js
+    |   |──APIConfig.js      #Fill in your Firebase API Key
+    | 
     └── index.css
     ├── package.json
 ```
