@@ -22,7 +22,7 @@ import OrderCategoryChart from './components/Charts/OrderCategoryChart';
 import CustomerSpendChart from './components/Charts/CustomerSpendChart';
 
 //PAGES
-import { About } from './pages/About';
+import  About  from './pages/About';
 import { Home } from './pages/Home';
 import Profile from './pages/Profile';
 import { SingleSellPost } from './components/singleSellPost';
