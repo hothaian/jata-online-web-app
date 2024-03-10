@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser, setUserLoggedIn } = useAuth();
+  const { currentUser, setCurrentUser, setUserLoggedIn, setLoading } = useAuth();
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -79,7 +79,8 @@ const SignUp = () => {
         console.log("User registered successfully!");
         setCurrentUser({ uid: user.uid, displayName: name, email });
         setUserLoggedIn(true);
-        navigate("/");
+        setLoading(false);
+        navigate("/profile");
       } else {
         console.error(
           "Error registering user:",

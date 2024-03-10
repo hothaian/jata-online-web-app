@@ -11,7 +11,7 @@ const SignUpWithAPI = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
-  const {userLoggedIn, currentUser, setCurrentUser, setUserLoggedIn } = useAuth();
+  const {setLoading, currentUser, setCurrentUser, setUserLoggedIn } = useAuth();
  
 
   useEffect(() => {
@@ -71,10 +71,8 @@ const SignUpWithAPI = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    
-
+    e.preventDefault();    
+    setLoading(true)
     try {
       const apiResponse = await fetch("http://localhost:8080/api/user", {
         method: "POST",
@@ -83,8 +81,8 @@ const SignUpWithAPI = () => {
         },
         body: JSON.stringify(formData),
       });
-
-      navigate("/");
+       setLoading(false);
+      navigate("/profile");
     } catch (error) {
       console.error("Error registering user:", error.message);
       setError(error.message);
@@ -117,7 +115,7 @@ const SignUpWithAPI = () => {
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-outline mb-4">
-                        {console.log("formData.email:", formData.email)}
+                     
                           <input
                             type="email"
                             id="email"

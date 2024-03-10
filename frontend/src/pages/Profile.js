@@ -11,7 +11,7 @@ import {
 
 } from "mdb-react-ui-kit";
 
-import avartar from "../images/avartar.png";
+
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import DashBoard from "./DashBoard";
@@ -101,9 +101,11 @@ export default function Profile() {
     if (!loading && !userLoggedIn) {
       navigate("/");
     } else {
+      console.log("🚀 ~ Profile ~  Fetchinggg new data currentUser:", currentUser)
+
       fetchData();
     }
-  }, [userLoggedIn, loading]);
+  }, [currentUser,userLoggedIn, loading]);
 
   const handleEditProfile = () => {
     // Navigate to the EditProfile page when the button is clicked

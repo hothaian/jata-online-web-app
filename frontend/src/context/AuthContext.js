@@ -15,7 +15,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
-  
+  const [sellPost, setSellPost] = useState(false)
   const [currentUser, setCurrentUser] = useState(null);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [isEmailUser, setIsEmailUser] = useState(false);
@@ -69,6 +69,9 @@ export function AuthProvider({ children }) {
     currentUser,
     setCurrentUser,
     loading,
+    setLoading,
+    sellPost,
+    setSellPost
 
   };
 

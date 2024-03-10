@@ -23,7 +23,7 @@ import axios from "axios";
 
 const AddSellPost = () => {
   const [open, setOpen] = useState(false);
-  const { userLoggedIn, currentUser, getToken } = useAuth();
+  const { userLoggedIn, currentUser, setSellPost } = useAuth();
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     seller_id: currentUser.user_id,
@@ -88,6 +88,7 @@ const AddSellPost = () => {
         // Handle error response (e.g., show an error message)
         console.error("Failed to submit sell post:", response);
       }
+      setSellPost(true);
       handleClosePopup();
     } catch (error) {
       console.error("Error submitting sell post:", error);

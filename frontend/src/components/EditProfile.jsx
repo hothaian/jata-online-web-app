@@ -6,14 +6,37 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ImageUploader from "./ImageHandle/ImageUploader";
 
 const EditProfile = () => {
   const navigate = useNavigate();
-
+ 
+  const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
-  const { userLoggedIn, currentUser } = useAuth();
+  const { userLoggedIn, currentUser, setLoading } = useAuth();
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    name: "",
+    email: email,
+    username: "",
+    role_id: null,
+
+    gender: "",
+    date_of_birth: null,
+    profile_pictureUrl: "",
+    addresses: {
+      street_address: "",
+      city: "",
+      state: "",
+      zip_code: "",
+      country: "",
+    },
+  });
 
   useEffect(() => {
+
+   
     const fetchData = async () => {
       try {
         if (userLoggedIn && currentUser && currentUser.user_id) {
@@ -22,7 +45,32 @@ const EditProfile = () => {
           );
           if (response.ok) {
             const data = await response.json();
+            
+     
+            const firstAddress = data.addresses && data.addresses.length > 0
+            ? data.addresses[0]
+            : {};
 
+            setFormData({
+              first_name: data.first_name || "",
+              last_name: data.last_name || "",
+              name: data.name || "",
+              email: data.email || "",
+              username: data.username || "",
+              role_id: data.role_id || null,
+              gender: data.gender || "",
+              date_of_birth: data.date_of_birth || null,
+              profile_pictureUrl: data.profile_pictureUrl || "",
+              addresses: {
+                street_address: firstAddress.street_address || "",
+                city: firstAddress.city || "",
+                state: firstAddress.state || "",
+                zip_code: firstAddress.zip_code || "",
+                country: firstAddress.country || "",
+              },
+            });
+            
+         
             
 
          
@@ -38,33 +86,25 @@ const EditProfile = () => {
     // Check if currentUser exists before logging the email
     if (currentUser && currentUser.email) {
       fetchData();
+      console.log("🚀 ~ Initial~ formData:", formData)
       setFormData({ ...formData, email: currentUser.email });
     } else {
       console.log("Problem with get currentUser.email");
     }
   }, []);
 
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    name: "",
-    email: email,
-    username: "",
-    role_id: null,
 
-    gender: "",
-    date_of_birth: null,
-    profile_pictureUrl: "",
-    address: {
-      street_address: "",
-      city: "",
-      state: "",
-      zip_code: "",
-      country: "",
-    },
-  });
 
-  const [error, setError] = useState(null);
+  const handleUploadComplete = (downloadURL) => {
+    // Update the picUrl in formData with the downloaded image URL
+    console.log(downloadURL);
+    setFormData((prevData) => ({
+      ...prevData,
+      profile_pictureUrl: downloadURL,
+    }));
+    console.log("🚀 ~ Uploaded Image~ formData:", formData)
+    console.log("🚀 ~ EditProfile ~ formData:", formData.profile_pictureUrl)
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -82,8 +122,8 @@ const EditProfile = () => {
     const { id, value } = e.target;
     setFormData({
       ...formData,
-      address: {
-        ...formData.address,
+      addresses: {
+        ...formData.addresses,
         [id]: value,
       },
     });
@@ -93,15 +133,17 @@ const EditProfile = () => {
     e.preventDefault();
 
     try {
-      const apiResponse = await fetch("http://localhost:8080/api/user", {
-        method: "POST",
+      console.log("🚀 ~ handleSubmit ~ currentUser.user_id:", currentUser.user_id)
+      const apiResponse = await fetch(`http://localhost:8080/api/user/${currentUser.user_id}`, {
+        method: "PUT",
+       
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-
-      navigate("/");
+      setLoading(false);
+      navigate("/profile");
     } catch (error) {
       console.error("Error registering user:", error.message);
       setError(error.message);
@@ -205,9 +247,9 @@ const EditProfile = () => {
                             onChange={handleChange}
                           >
                             <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
                           </select>
                           <label className="form-label" htmlFor="gender">
                             Gender
@@ -223,7 +265,7 @@ const EditProfile = () => {
                             selected={formData.date_of_birth}
                             onChange={handleDateChange}
                             className="form-control form-control-lg"
-                            dateFormat="yyyy-MM-dd HH:mm:ss"
+                            dateFormat="yyyy-MM-dd"
                             showTimeInput={false}
                             placeholderText="Select Date of Birth"
                           />
@@ -242,7 +284,7 @@ const EditProfile = () => {
                             type="text"
                             id="street_address"
                             className="form-control form-control-lg"
-                            value={formData.address.street_address}
+                            value={formData.addresses.street_address}
                             onChange={handleAddressChange}
                           />
                           <label
@@ -260,7 +302,7 @@ const EditProfile = () => {
                             type="text"
                             id="city"
                             className="form-control form-control-lg"
-                            value={formData.address.city}
+                            value={formData.addresses.city}
                             onChange={handleAddressChange}
                           />
                           <label className="form-label" htmlFor="city">
@@ -277,7 +319,7 @@ const EditProfile = () => {
                             type="text"
                             id="state"
                             className="form-control form-control-lg"
-                            value={formData.address.state}
+                            value={formData.addresses.state}
                             onChange={handleAddressChange}
                           />
                           <label className="form-label" htmlFor="state">
@@ -292,7 +334,7 @@ const EditProfile = () => {
                             type="text"
                             id="zip_code"
                             className="form-control form-control-lg"
-                            value={formData.address.zip_code}
+                            value={formData.addresses.zip_code}
                             onChange={handleAddressChange}
                           />
                           <label className="form-label" htmlFor="zip_code">
@@ -309,7 +351,7 @@ const EditProfile = () => {
                             type="text"
                             id="country"
                             className="form-control form-control-lg"
-                            value={formData.address.country}
+                            value={formData.addresses.country}
                             onChange={handleAddressChange}
                           />
                           <label className="form-label" htmlFor="country">
@@ -355,13 +397,13 @@ const EditProfile = () => {
                         </a>
                       </label>
                     </div>
-
+                    <ImageUploader onUploadComplete={handleUploadComplete} />
                     <div className="d-flex justify-content-center">
                       <button
                         type="submit"
                         className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
                       >
-                        Register
+                        Save
                       </button>
                     </div>
 
@@ -371,13 +413,7 @@ const EditProfile = () => {
                       </div>
                     )}
 
-                    <p className="text-center text-muted mt-5 mb-0">
-                      Already have an account?
-                      <Link to="/login" className="text-body">
-                        {" "}
-                        Log In
-                      </Link>
-                    </p>
+
                   </form>
                 </div>
               </div>

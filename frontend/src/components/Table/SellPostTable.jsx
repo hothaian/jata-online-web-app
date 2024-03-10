@@ -14,7 +14,7 @@ import {
 
 import SearchIcon from '@mui/icons-material/Search';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
@@ -22,8 +22,13 @@ import AddSellPost from "../AddSellPost";
 import { MDBCol, MDBContainer, MDBRow, MDBCard } from "mdb-react-ui-kit";
 
 const SellPostTable = () => {
-  const { currentUser } = useAuth();
-
+  const { currentUser,sellPost } = useAuth();
+  const [reload, setReload] = useState(false)
+  const [rows, rowchange] = useState([]);
+  const [page, pagechange] = useState(0);
+  const [rowperpage, rowperpagechange] = useState(5);
+  const [sellpostIdFilter, setSellPostIdFilter] = useState("");
+  const [filteredRows, setFilteredRows] = useState([]);
   const columns = [
     { id: "sellpost_id", name: "Sell Post ID" },
     { id: "seller_id", name: "Seller ID" },
@@ -47,11 +52,7 @@ const SellPostTable = () => {
     pagechange(0);
   };
 
-  const [rows, rowchange] = useState([]);
-  const [page, pagechange] = useState(0);
-  const [rowperpage, rowperpagechange] = useState(5);
-  const [sellpostIdFilter, setSellPostIdFilter] = useState("");
-  const [filteredRows, setFilteredRows] = useState([]);
+
 
   useEffect(() => {
     const apiUrl = `http://localhost:8080/api/user/${currentUser.user_id}`;
@@ -64,11 +65,12 @@ const SellPostTable = () => {
         const initialRows = user.sellPosts;
         rowchange(initialRows);
         setFilteredRows(initialRows);
+        setReload(false)
       })
       .catch((error) => {
         console.error("Error fetching sell posts:", error.message);
       });
-  }, []);
+  }, [sellPost, reload]);
 
   const handleFilterSubmit = () => {
     // Apply the filters
@@ -84,6 +86,10 @@ const SellPostTable = () => {
     // Reset pagination to the first page
     pagechange(0);
   };
+  
+  const handleRefresh = () => {
+    setReload(true);
+  }
 
   const handleShowAll = () => {
     // Reset filter values
@@ -101,7 +107,7 @@ const SellPostTable = () => {
       <MDBContainer>
         <h1>SELL POST LIST</h1>
         <MDBRow className="mb-4" >
-          <MDBCol lg="5">
+          <MDBCol lg="3">
             <TextField
               label="Input Sell Post ID"
               value={sellpostIdFilter}
@@ -115,9 +121,9 @@ const SellPostTable = () => {
               variant="contained"
               color="primary"
               onClick={handleFilterSubmit}
-              style={{ marginRight: "10px" }}
+              style={{ marginLeft: "5px" }}
             >
-              Find Sell Post
+              Find Post
             </Button>
           </MDBCol>
           <MDBCol lg="2" className="ml-auto">
@@ -129,10 +135,21 @@ const SellPostTable = () => {
               style={{ marginRight: "10px" }}
             >
               Show All
-            </Button>
+            </Button>            
           </MDBCol>
-          <MDBCol lg="2">
-            
+
+          <MDBCol lg="2">            
+          <Button
+              endIcon={<RefreshIcon/>}
+              variant="contained"
+              color="primary"
+              onClick={handleRefresh}
+              style={{ marginRight: "10px" }}
+            >
+              Refresh
+            </Button> 
+          </MDBCol>
+          <MDBCol lg="2">            
             <AddSellPost />
           </MDBCol>
         </MDBRow>

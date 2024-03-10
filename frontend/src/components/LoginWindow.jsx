@@ -15,7 +15,7 @@ import {FaGithub, FaGoogle } from 'react-icons/fa';
 const Login = () => {
 
     const navigate = useNavigate(); 
-    const { userLoggedIn, currentUser } = useAuth()
+    const { userLoggedIn, currentUser,setLoading } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isSigningIn, setIsSigningIn] = useState(false)
@@ -75,6 +75,7 @@ const Login = () => {
       } finally {
         // Reset the signing in state, regardless of success or failure
         setIsSigningIn(false);
+
          
 
       }
