@@ -1,0 +1,24 @@
+/* NavBar.css */
+
+.navbar {
+    padding: 20px; /* Adjust the padding as needed */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 20000;
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar a {
+    margin-right: 15px;
+    text-decoration: none;
+  }
+  
+  /* Style for the content below the fixed navbar */
+  .content {
+    padding-top: 100px; /* Adjust the padding to match the height of the navbar */
+    box-sizing: border-box;
+
+  }
+  

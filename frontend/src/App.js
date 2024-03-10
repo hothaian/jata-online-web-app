@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+
   } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,7 +13,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootswatch/dist/lux/bootstrap.min.css';
 
 //COMPONENT
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar/NavBar';
 import {ShoppingCart} from './components/ShoppingCart';
 import Login from './components/LoginWindow';
 import SignUp from './components/SignUp/SignUp';
@@ -31,11 +32,24 @@ import EditProfile from './components/EditProfile';
 
 const App = () => {  
 
+  const [scrolling, setScrolling] = useState(false);
+
+  const handleScroll = () => {
+    setScrolling(window.scrollY > 10); // Adjust the threshold as needed
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
 
   return (
       <div>
-        <NavBar />
+        <NavBar  floating={scrolling} />
+        <div style={{ marginTop: '108px' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -55,6 +69,8 @@ const App = () => {
           <Route path="/category/:category_id" element={<CategorySellPost />} />
 
         </Routes>
+        </div>
+
 
       </div>
   );

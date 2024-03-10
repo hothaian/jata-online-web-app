@@ -1,12 +1,13 @@
 /**
  * Author: An Ho, Tin Phu
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { doSignOut } from "../firebase/auth";
+import { useAuth } from "../../context/AuthContext";
+import { doSignOut } from "../../firebase/auth";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../../context/CartContext";
+import "./NavBar.css";
 
 const NavBar = () => {
   const { currentUser } = useAuth();
@@ -14,7 +15,10 @@ const NavBar = () => {
   const [totalItems, setTotalItems] = useState(0);
   useEffect(() => {
     // Calculate the total number of items in the cart whenever cartItems change
-    const newTotalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const newTotalItems = cartItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
     setTotalItems(newTotalItems);
   }, [cartItems]);
 
@@ -41,19 +45,14 @@ const NavBar = () => {
     );
   };
 
-
-  
   const handleSignOut = async () => {
     try {
-      await doSignOut(); 
-      console.log("🚀 doSignOut:")
+      await doSignOut();
+      console.log("🚀 doSignOut:");
     } catch (error) {
       console.error("Error signing out:", error);
     }
-      
   };
-
-
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -103,8 +102,10 @@ const NavBar = () => {
 
             <li className="navbar-nav ms-auto">
               <Link className="nav-link" to="/cart">
-              <ShoppingBasketIcon />
-              {totalItems > 0 && <span className="badge">({totalItems})</span>}
+                <ShoppingBasketIcon />
+                {totalItems > 0 && (
+                  <span className="badge">({totalItems})</span>
+                )}
               </Link>
             </li>
           </ul>

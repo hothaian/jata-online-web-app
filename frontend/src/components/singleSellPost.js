@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 export const SingleSellPost = ({ match }) => {
   const { post_id } = useParams();
@@ -8,6 +9,7 @@ export const SingleSellPost = ({ match }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1); // State to manage selected quantity
   const [newComment, setNewComment] = useState(""); // State to manage new comment input
   const { userLoggedIn, currentUser, getToken } = useAuth();
+  const { addItemToCart } = useCart();
 
   useEffect(() => {
     const fetchASellPost = async () => {
@@ -30,6 +32,9 @@ export const SingleSellPost = ({ match }) => {
     };
     fetchASellPost();
   }, []);
+
+
+
   // const handleBuyButton = () => {
   //   const itemToAdd = {
   //     title: title,
@@ -39,6 +44,12 @@ export const SingleSellPost = ({ match }) => {
   //   };
 
   // };
+
+  const handleBuyButton = () => {
+    const itemWithQuantity = { ...currentPost, quantity: selectedQuantity };
+    addItemToCart(itemWithQuantity);
+    // addItemToCart(sellpost);
+  };
 
   const handleQuantityChange = (num) => {
     setSelectedQuantity(num);
@@ -90,7 +101,10 @@ export const SingleSellPost = ({ match }) => {
                 <div className="card-header d-flex justify-content-between align-items-center">
                   <div className="d-flex align-items-center">
                     <img
-                      src={currentPost.seller?.profile_pictureUrl || "https://cdn.pixabay.com/photo/2016/08/31/11/54/icon-1633249_960_720.png"}
+                      src={
+                        currentPost.seller?.profile_pictureUrl ||
+                        "https://cdn.pixabay.com/photo/2016/08/31/11/54/icon-1633249_960_720.png"
+                      }
                       alt="User Profile"
                       className="rounded-circle me-2"
                       style={{ width: "32px", height: "32px" }}
@@ -150,8 +164,8 @@ export const SingleSellPost = ({ match }) => {
                           </li>
                         ))}
                       </ul>
-                      <button type="button" className="btn btn-primary py-1">
-                        Buy Now
+                      <button onClick= {handleBuyButton}type="button" className="btn btn-primary py-1">
+                        Add To Cart
                       </button>
                     </div>
                   </div>
@@ -164,7 +178,11 @@ export const SingleSellPost = ({ match }) => {
                     currentPost.comments.map((comment) => (
                       <li key={comment.comment_id} className="list-group-item">
                         <img
-                          src={comment.user.profile_pictureUrl}
+                          src={
+                            comment.user.profile_pictureUrl
+                              ? comment.user.profile_pictureUrl
+                              : "https://cdn.pixabay.com/photo/2016/08/31/11/54/icon-1633249_960_720.png"
+                          }
                           alt="User Profile"
                           className="rounded-circle me-2"
                           style={{ width: "32px", height: "32px" }}
