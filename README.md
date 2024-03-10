@@ -63,7 +63,17 @@ Before you begin, ensure you have the following installed:
   ```
   cd backend
   npm install
+  npm start
   ```
+
+- Once the database is synced, terminate the process (`Ctrl + C`).
+- Run the following command to apply Sequelize migrations and load data into the tables:
+  ```
+  npx sequelize db:migrate
+  ```
+
+- 
+
 
 5. **Frontend and Backend Dependencies:**
 
@@ -90,12 +100,7 @@ Follow the steps below to set up and run your project locally.
    - This will establish a connection to your local MySQL server and sync the database.
 
 2. **Run Sequelize Migrations:**
-   - Please go to Jata_Backend/config/config.json to configurate database credential.
-   - Once the database is synced, terminate the process (`Ctrl + C`).
-   - Run the following command to apply Sequelize migrations and load data into the tables:
-     ```
-     npx sequelize db:migrate
-     ```
+
 
 ### Frontend
 
