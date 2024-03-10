@@ -10,20 +10,39 @@ import "react-datepicker/dist/react-datepicker.css";
 const EditProfile = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const {userLoggedIn, currentUser, setCurrentUser, setUserLoggedIn } = useAuth();
- 
+  const [email, setEmail] = useState("");
+  const { userLoggedIn, currentUser } = useAuth();
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (userLoggedIn && currentUser && currentUser.user_id) {
+          const response = await fetch(
+            `http://localhost:8080/api/user/${currentUser.user_id}`
+          );
+          if (response.ok) {
+            const data = await response.json();
+
+            
+
+         
+          } else {
+            console.error("Error fetching user data:", response.statusText);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
+      }
+    };
+
     // Check if currentUser exists before logging the email
     if (currentUser && currentUser.email) {
-      console.log('Current user email:', currentUser.email);
+      fetchData();
       setFormData({ ...formData, email: currentUser.email });
     } else {
-      console.log('No current user or email found');
+      console.log("Problem with get currentUser.email");
     }
   }, []);
- 
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -73,8 +92,6 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-
     try {
       const apiResponse = await fetch("http://localhost:8080/api/user", {
         method: "POST",
@@ -117,7 +134,7 @@ const EditProfile = () => {
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-outline mb-4">
-                        {console.log("formData.email:", formData.email)}
+                          {console.log("formData.email:", formData.email)}
                           <input
                             type="email"
                             id="email"

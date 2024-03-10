@@ -8,8 +8,7 @@ import {
   MDBCardBody,
   MDBCardImage,
   MDBBtn,
-  MDBProgress,
-  MDBProgressBar,
+
 } from "mdb-react-ui-kit";
 
 import avartar from "../images/avartar.png";
@@ -120,7 +119,7 @@ export default function Profile() {
               <MDBCardBody className="text-center">
                 <MDBCardImage
                   src={
-                    user.profile_pictureUrl ? user.profile_pictureUrl : avartar
+                    user.profile_pictureUrl ? user.profile_pictureUrl : 'https://cdn.pixabay.com/photo/2016/08/31/11/54/icon-1633249_960_720.png'
                   }
                   alt="avatar"
                   className="rounded-circle"

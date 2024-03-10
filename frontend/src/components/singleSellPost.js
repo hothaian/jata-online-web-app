@@ -90,7 +90,7 @@ export const SingleSellPost = ({ match }) => {
                 <div className="card-header d-flex justify-content-between align-items-center">
                   <div className="d-flex align-items-center">
                     <img
-                      src={currentPost.seller?.profile_pictureUrl}
+                      src={currentPost.seller?.profile_pictureUrl || "https://cdn.pixabay.com/photo/2016/08/31/11/54/icon-1633249_960_720.png"}
                       alt="User Profile"
                       className="rounded-circle me-2"
                       style={{ width: "32px", height: "32px" }}

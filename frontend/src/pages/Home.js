@@ -1,10 +1,13 @@
 // /src/pages/Home.js
 
 import React, { useEffect, useState } from "react";
-import logoImage from "../images/jata_black.png"; // Adjust the path to your logo image
-import { sellPosts } from "../hardCodeData/sellPostData";
 import { SellPost } from "../components/SellPost";
 import { Link } from "react-router-dom";
+import {
+  MDBCol,
+  MDBRow
+} from "mdb-react-ui-kit";
+
 
 export const Home = () => {
   const [sellPostList, setSellPostList] = useState([]);
@@ -49,25 +52,38 @@ export const Home = () => {
 
   return (
     <>
-      <h1>Explore</h1>
-      {categoryList ? (
-        categoryList.map((category) => (
-          <Link
-            key={category.category_id}
-            to={`/category/${category.category_id}`}
-          >
-            <span key={category.category_id} className="badge bg-primary m-1">
-              {category.category_name}
-            </span>
-          </Link>
-        ))
-      ) : (
-        <></>
-      )}
-      {sellPostList ? (
-        sellPostList.map((sellPost) => (
-          <SellPost key={sellPost.sellpost_id} sellpost={sellPost} />
-        ))
+<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  <h1>Explore</h1>
+  <div>
+    {categoryList ? (
+      categoryList.map((category) => (
+        <Link
+          key={category.category_id}
+          to={`/category/${category.category_id}`}
+        >
+          <span key={category.category_id} className="badge bg-primary m-1">
+            {category.category_name}
+          </span>
+        </Link>
+      ))
+    ) : (
+      <></>
+    )}
+  </div>
+</div>
+
+
+{sellPostList ? (
+  <MDBRow>
+    {sellPostList.map((sellPost, index) => (
+      <React.Fragment key={sellPost.sellpost_id}>
+        <MDBCol lg="6" className="mb-4">
+          <SellPost sellpost={sellPost} />
+        </MDBCol>
+        {(index + 1) % 2 === 0 && <div className="w-100"></div>} {/* Add a new row after every 2 SellPosts */}
+      </React.Fragment>
+    ))}
+  </MDBRow>
       ) : (
         <></>
       )}

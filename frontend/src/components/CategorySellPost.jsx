@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { SellPost } from "./SellPost";
+import { Link, useParams } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 
 export const CategorySellPost = ({ addToCart }) => {
   const { category_id } = useParams();
-
   const [category, setCategory] = useState([]);
 
   //Effect for Sell Post
@@ -32,12 +32,40 @@ export const CategorySellPost = ({ addToCart }) => {
 
   return (
     <>
-      <h1>{category?.category_name}</h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <h1>Explore</h1>
+        <div>
+          <Link to="/">
+            <HomeIcon />
+          </Link>
+          /
+          <Link
+            key={category.category_id}
+            to={`/category/${category.category_id}`}
+          >
+            <span key={category.category_id} className="badge bg-primary m-1">
+              {category.category_name}
+            </span>
+          </Link>
+        </div>
+      </div>
 
       {category?.sellposts ? (
-        category.sellposts.map((sellPost) => (
-          <SellPost key={sellPost.sellpost_id} sellpost={sellPost} />
-        ))
+        <MDBRow>
+          {category.sellposts.map((sellPost, index) => (
+            <MDBCol lg="6" key={sellPost.sellpost_id}>
+              <div>
+                <SellPost sellpost={sellPost} />
+              </div>
+            </MDBCol>
+          ))}
+        </MDBRow>
       ) : (
         <></>
       )}

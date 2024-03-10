@@ -27,7 +27,6 @@ import { Home } from './pages/Home';
 import Profile from './pages/Profile';
 import { SingleSellPost } from './components/singleSellPost';
 import { CategorySellPost } from './components/CategorySellPost';
-
 import EditProfile from './components/EditProfile';
 
 const App = () => {  
@@ -56,6 +55,7 @@ const App = () => {
           <Route path="/category/:category_id" element={<CategorySellPost />} />
 
         </Routes>
+
       </div>
   );
 };

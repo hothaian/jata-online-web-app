@@ -4,7 +4,7 @@ import logoImage from "../images/jata_black.png";
 export const About = () => {
   return (
     <>
-      <div>
+      <div className="">
         <h1 className="display-4">Welcome to JATA Fashion</h1>
       </div>
 
