@@ -2,29 +2,122 @@ module.exports = app => {
     const user = require("../controllers/user.controller");
     var router = require("express").Router();
   
-    // Create a new Tutorial
-    // {
-    //     "buyer_id": 1,
-    //     "total_price": "31.98",
-    //     "shipping_address": {
-    //         "user_id": 1,
-    //       "street_address": "123 Tacoma Tacoma TTacomaacoma St",
-    //       "city": "Tacoma",
-    //       "state": "NY",
-    //       "zip_code": "10001",
-    //       "country": "USA"
-    //     },
-    //     "items": [
-    //       {
-    //         "quantity": 2,
-    //         "sellpost_id": 2
-    //       },
-    //       {
-    //         "quantity": 1,
-    //         "sellpost_id": 1
-    //       }
-    //     ]
-    //   }
+/**
+ *  @swagger
+ *  /api/user:
+ *    post:
+ *      summary: Create a new user
+ *      description: Create a new user with the provided details.
+ *      tags:
+ *        - User
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - username
+ *                - email
+ *                - address
+ *              properties:
+ *                username:
+ *                  type: string
+ *                email:
+ *                  type: string
+ *                role_id:
+ *                  type: integer
+ *                first_name:
+ *                  type: string
+ *                last_name:
+ *                  type: string
+ *                gender:
+ *                  type: string
+ *                date_of_birth:
+ *                  type: string
+ *                  format: date
+ *                profile_pictureUrl:
+ *                  type: string
+ *                address:
+ *                  type: object
+ *                  required:
+ *                    - street_address
+ *                    - city
+ *                    - state
+ *                    - zip_code
+ *                    - country
+ *                    - user_id
+ *                  properties:
+ *                    street_address:
+ *                      type: string
+ *                    city:
+ *                      type: string
+ *                    state:
+ *                      tsype: string
+ *                    zip_code:
+ *                      type: string
+ *                    country:
+ *                      type: string
+ *                    user_id:
+ *                      type: integer
+ *      responses:
+ *        "201":
+ *          description: User created successfully
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "User created successfully"
+ *                  postedUser:
+ *                    type: object
+ *                    properties:
+ *                      user_id:
+ *                        type: integer
+ *                      username:
+ *                        type: string
+ *                      email:
+ *                        type: string
+ *                      role_id:
+ *                        type: integer
+ *                      first_name:
+ *                        type: string
+ *                      last_name:
+ *                        type: string
+ *                      gender:
+ *                        type: string
+ *                      date_of_birth:
+ *                        type: string
+ *                        format: date-time
+ *                      updatedAt:
+ *                        type: string
+ *                        format: date-time
+ *                      createdAt:
+ *                        type: string
+ *                        format: date-time
+ *        "400":
+ *          description: Bad request - Username, Email, Street address, City, State, Zip code, Country, and User ID cannot be empty
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Username and Email cannot be empty!"
+ *        "500":
+ *          description: Internal server error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  message:
+ *                    type: string
+ *                    example: "Internal server error"
+ */
     router.post("/", user.create);
   
     // Retrieve all user
