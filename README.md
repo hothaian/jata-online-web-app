@@ -8,8 +8,7 @@ Welcome to JATA Online Market! Our collaborative team for class TCSS 460 at Univ
 [<img src="./logo.png" width="300" height="300" />](./logo.png )
 
 
-
-
+Team Github: https://github.com/hothaian/jata-online-web-app
 
 #### Meet the team:
 
@@ -44,6 +43,7 @@ Welcome to JATA Online Market! Our collaborative team for class TCSS 460 at Univ
   - [Backend](#backend)
   - [Frontend](#frontend) 
 - [Folder Structure](#folder-structure)
+- [API Document by Swagger -  http://localhost:8080/api-docs/](http://localhost:8080/api-docs/)
 
 ## Prerequisites
 
